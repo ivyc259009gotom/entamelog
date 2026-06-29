@@ -8,13 +8,26 @@ use Illuminate\Support\Facades\Auth;
 
 class WorkController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $keyword = $request->input('keyword');
+        $type = $request->input('type');
+        $status = $request->input('status');
+
         $works = Work::where('user_id', Auth::id())
+            ->when($keyword, function ($query, $keyword) {
+                return $query->where('title', 'like', '%' . $keyword . '%');
+            })
+            ->when($type, function ($query, $type) {
+                return $query->where('type', $type);
+            })
+            ->when($status, function ($query, $status) {
+                return $query->where('status', $status);
+            })
             ->latest()
             ->get();
 
-        return view('works.index', compact('works'));
+        return view('works.index', compact('works', 'keyword', 'type', 'status'));
     }
 
     public function create()

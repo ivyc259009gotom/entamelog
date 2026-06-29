@@ -23,6 +23,51 @@
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
+
+                    <form action="{{ route('works.index') }}" method="GET" class="mb-6">
+                        <div class="flex items-center gap-3">
+                            <input type="text"
+                                name="keyword"
+                                value="{{ $keyword ?? '' }}"
+                                placeholder="作品タイトルで検索"
+                                class="block w-full rounded-md border-gray-300 shadow-sm">
+
+                            <select name="type"
+                                    class="rounded-md border-gray-300 shadow-sm"
+                                    style="min-width: 140px;">
+                                <option value="">すべての種別</option>
+                                <option value="映画" @selected(($type ?? '') === '映画')>映画</option>
+                                <option value="ドラマ" @selected(($type ?? '') === 'ドラマ')>ドラマ</option>
+                                <option value="アニメ" @selected(($type ?? '') === 'アニメ')>アニメ</option>
+                                <option value="本" @selected(($type ?? '') === '本')>本</option>
+                                <option value="ゲーム" @selected(($type ?? '') === 'ゲーム')>ゲーム</option>
+                                <option value="その他" @selected(($type ?? '') === 'その他')>その他</option>
+                            </select>
+
+                            <select name="status"
+                                    class="rounded-md border-gray-300 shadow-sm"
+                                    style="min-width: 140px;">
+                                <option value="">すべての状況</option>
+                                <option value="観たい" @selected(($status ?? '') === '観たい')>観たい</option>
+                                <option value="視聴中" @selected(($status ?? '') === '視聴中')>視聴中</option>
+                                <option value="完了" @selected(($status ?? '') === '完了')>完了</option>
+                                <option value="中断" @selected(($status ?? '') === '中断')>中断</option>
+                            </select>
+
+                            <button type="submit"
+                                    class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+                                    style="min-width: 80px; white-space: nowrap;">
+                                検索
+                            </button>
+
+                            <a href="{{ route('works.index') }}"
+                            class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 text-center"
+                            style="min-width: 80px; white-space: nowrap;">
+                                クリア
+                            </a>
+                        </div>
+                    </form>
+
                     @if ($works->isEmpty())
                         <p class="text-gray-600">
                             まだ作品が登録されていません。
