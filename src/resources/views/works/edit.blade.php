@@ -10,6 +10,14 @@
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold text-gray-900">
+                            作品情報を編集する
+                        </h3>
+                        <p class="mt-1 text-sm text-gray-600">
+                            視聴状況、評価、感想メモなどを更新できます。
+                        </p>
+                    </div>
 
                     @if ($errors->any())
                         <div class="mb-4 p-4 bg-red-100 text-red-800 rounded">

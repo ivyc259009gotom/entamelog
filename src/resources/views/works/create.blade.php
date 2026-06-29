@@ -10,6 +10,14 @@
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold text-gray-900">
+                            新しい作品を記録する
+                        </h3>
+                        <p class="mt-1 text-sm text-gray-600">
+                            映画・ドラマ・アニメ・本・ゲームなど、気になっている作品や見終わった作品を登録できます。
+                        </p>
+                    </div>
 
                     @if ($errors->any())
                         <div class="mb-4 p-4 bg-red-100 text-red-800 rounded">
@@ -29,8 +37,8 @@
                                 作品タイトル
                             </label>
                             <input type="text" name="title" value="{{ old('title') }}"
-                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-                                   required>
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                                required>
                         </div>
 
                         <div>
@@ -55,8 +63,8 @@
                                 ジャンル
                             </label>
                             <input type="text" name="genre" value="{{ old('genre') }}"
-                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-                                   placeholder="例：ファンタジー、恋愛、ミステリー">
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                                placeholder="例：ファンタジー、恋愛、ミステリー">
                         </div>
 
                         <div>
@@ -94,8 +102,8 @@
                                 感想・メモ
                             </label>
                             <textarea name="memo" rows="5"
-                                      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-                                      placeholder="感想やメモを入力">{{ old('memo') }}</textarea>
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                                    placeholder="感想やメモを入力">{{ old('memo') }}</textarea>
                         </div>
 
                         <div class="flex gap-3">
@@ -105,7 +113,7 @@
                             </button>
 
                             <a href="{{ route('works.index') }}"
-                               class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">
+                                class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">
                                 キャンセル
                             </a>
                         </div>

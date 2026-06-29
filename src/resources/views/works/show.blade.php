@@ -39,15 +39,45 @@
                             {{ $work->genre ?: '未設定' }}
                         </p>
 
-                        <p>
+                        <div>
                             <span class="font-semibold text-gray-700">状況：</span>
-                            {{ $work->status }}
-                        </p>
+
+                            @if ($work->status === '観たい')
+                                <span class="inline-block px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">
+                                    観たい
+                                </span>
+                            @elseif ($work->status === '視聴中')
+                                <span class="inline-block px-2 py-1 text-xs rounded-full bg-purple-100 text-purple-800">
+                                    視聴中
+                                </span>
+                            @elseif ($work->status === '完了')
+                                <span class="inline-block px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">
+                                    完了
+                                </span>
+                            @elseif ($work->status === '中断')
+                                <span class="inline-block px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-800">
+                                    中断
+                                </span>
+                            @else
+                                <span class="inline-block px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-800">
+                                    {{ $work->status }}
+                                </span>
+                            @endif
+                        </div>
 
                         <p>
                             <span class="font-semibold text-gray-700">評価：</span>
+
                             @if ($work->rating)
-                                {{ $work->rating }} / 5
+                                <span class="text-yellow-500">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        @if ($i <= $work->rating)
+                                            ★
+                                        @else
+                                            ☆
+                                        @endif
+                                    @endfor
+                                </span>
                             @else
                                 未評価
                             @endif
@@ -64,12 +94,12 @@
 
                     <div class="flex gap-3 border-t pt-4">
                         <a href="{{ route('works.edit', $work) }}"
-                           class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+                            class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
                             編集
                         </a>
 
                         <form action="{{ route('works.destroy', $work) }}" method="POST"
-                              onsubmit="return confirm('この作品を削除しますか？');">
+                            onsubmit="return confirm('この作品を削除しますか？');">
                             @csrf
                             @method('DELETE')
 

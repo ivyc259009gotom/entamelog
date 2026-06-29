@@ -28,19 +28,42 @@
                             まだ作品が登録されていません。
                         </p>
                     @else
-                        <div class="grid gap-4">
+                        <div class="grid gap-4 md:grid-cols-2">
                             @foreach ($works as $work)
-                                <div class="border rounded-lg p-4">
+                                <div class="border rounded-xl p-5 bg-white shadow-sm hover:shadow-md transition">
                                     <div class="flex justify-between items-start">
                                         <div>
-                                            <h3 class="text-lg font-bold text-gray-900">
+                                            <h3 class="text-xl font-bold text-gray-900">
                                                 {{ $work->title }}
                                             </h3>
 
                                             <p class="text-sm text-gray-600 mt-1">
                                                 種別：{{ $work->type }}
-                                                ／ 状況：{{ $work->status }}
                                             </p>
+
+                                            <div class="mt-2">
+                                                @if ($work->status === '観たい')
+                                                    <span class="inline-block px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">
+                                                        観たい
+                                                    </span>
+                                                @elseif ($work->status === '視聴中')
+                                                    <span class="inline-block px-2 py-1 text-xs rounded-full bg-purple-100 text-purple-800">
+                                                        視聴中
+                                                    </span>
+                                                @elseif ($work->status === '完了')
+                                                    <span class="inline-block px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">
+                                                        完了
+                                                    </span>
+                                                @elseif ($work->status === '中断')
+                                                    <span class="inline-block px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-800">
+                                                        中断
+                                                    </span>
+                                                @else
+                                                    <span class="inline-block px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-800">
+                                                        {{ $work->status }}
+                                                    </span>
+                                                @endif
+                                            </div>
 
                                             @if ($work->genre)
                                                 <p class="text-sm text-gray-600">
@@ -50,7 +73,16 @@
 
                                             @if ($work->rating)
                                                 <p class="text-sm text-gray-600">
-                                                    評価：{{ $work->rating }} / 5
+                                                    評価：
+                                                    <span class="text-yellow-500">
+                                                        @for ($i = 1; $i <= 5; $i++)
+                                                            @if ($i <= $work->rating)
+                                                                ★
+                                                            @else
+                                                                ☆
+                                                            @endif
+                                                        @endfor
+                                                    </span>
                                                 </p>
                                             @endif
 
