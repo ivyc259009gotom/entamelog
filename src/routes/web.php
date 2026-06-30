@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WorkController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\TimelineController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -17,6 +18,8 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::resource('works', WorkController::class);
+
+    Route::get('/timeline', [TimelineController::class, 'index'])->name('timeline.index');
     
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');

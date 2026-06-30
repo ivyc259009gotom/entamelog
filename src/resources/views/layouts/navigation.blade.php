@@ -20,6 +20,10 @@
                         作品一覧
                     </x-nav-link>
 
+                    <x-nav-link :href="route('timeline.index')" :active="request()->routeIs('timeline.*')">
+                        タイムライン
+                    </x-nav-link>
+
                     <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
                         ユーザー検索
                     </x-nav-link>
@@ -79,6 +83,14 @@
                 ホーム
             </x-responsive-nav-link>
 
+            <x-responsive-nav-link :href="route('works.index')" :active="request()->routeIs('works.*')">
+                作品一覧
+            </x-responsive-nav-link>
+            
+            <x-responsive-nav-link :href="route('timeline.index')" :active="request()->routeIs('timeline.*')">
+                タイムライン
+            </x-responsive-nav-link>
+            
             <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
                 ユーザー検索
             </x-responsive-nav-link>
