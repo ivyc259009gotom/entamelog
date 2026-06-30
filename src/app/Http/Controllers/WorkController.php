@@ -57,7 +57,12 @@ class WorkController extends Controller
 
     public function show(Work $work)
     {
-        if ($work->user_id !== Auth::id()) {
+        $work->load('user');
+
+        $isOwner = $work->user_id === Auth::id();
+        $isFollowingOwner = Auth::user()->isFollowing($work->user);
+
+        if (! $isOwner && ! $isFollowingOwner) {
             abort(403);
         }
 

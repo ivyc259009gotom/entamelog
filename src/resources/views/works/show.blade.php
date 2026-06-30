@@ -6,7 +6,7 @@
             </h2>
 
             <a href="{{ route('works.index') }}"
-               class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">
+                class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">
                 一覧へ戻る
             </a>
         </div>
@@ -86,30 +86,34 @@
                         <div>
                             <p class="font-semibold text-gray-700">感想・メモ：</p>
 
-                            <div class="mt-2 p-4 bg-gray-50 rounded-md text-gray-800 whitespace-pre-wrap">
+                            <div class="mt-2 p-4 bg-gray-50 rounded-md text-gray-800 text-left"
+                                style="text-align: left; word-break: break-all;">
                                 {{ $work->memo ?: 'メモはありません。' }}
                             </div>
                         </div>
                     </div>
 
-                    <div class="flex gap-3 border-t pt-4">
-                        <a href="{{ route('works.edit', $work) }}"
-                            class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
-                            編集
-                        </a>
+                    @if ($work->user_id === Auth::id())
+                        <div class="flex gap-3 border-t pt-4">
+                            <a href="{{ route('works.edit', $work) }}"
+                                class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+                                style="white-space: nowrap;">
+                                編集
+                            </a>
 
-                        <form action="{{ route('works.destroy', $work) }}" method="POST"
-                            onsubmit="return confirm('この作品を削除しますか？');">
-                            @csrf
-                            @method('DELETE')
+                            <form action="{{ route('works.destroy', $work) }}" method="POST"
+                                onsubmit="return confirm('この作品を削除しますか？');">
+                                @csrf
+                                @method('DELETE')
 
-                            <button type="submit"
-                                    class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
-                                削除
-                            </button>
-                        </form>
-                    </div>
-
+                                <button type="submit"
+                                        class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+                                        style="white-space: nowrap;">
+                                    削除
+                                </button>
+                            </form>
+                        </div>
+                    @endif
                 </div>
             </div>
 

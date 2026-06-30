@@ -69,15 +69,21 @@
                                         </p>
 
                                         @if ($work->memo)
-                                            <p class="mt-3 text-gray-600">
+                                            <p class="mt-3 text-gray-600 text-sm"
+                                            style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
                                                 {{ $work->memo }}
                                             </p>
                                         @endif
                                     </div>
 
-                                    <div class="mt-4">
+                                    <div class="mt-4 flex items-center gap-4">
+                                        <a href="{{ route('works.show', $work) }}"
+                                        class="text-indigo-600 hover:text-indigo-800 text-sm font-semibold">
+                                            作品詳細を見る
+                                        </a>
+
                                         <a href="{{ route('users.show', $work->user) }}"
-                                            class="text-indigo-600 hover:text-indigo-800 text-sm font-semibold">
+                                        class="text-gray-600 hover:text-gray-800 text-sm font-semibold">
                                             {{ $work->user->name }} さんのページを見る
                                         </a>
                                     </div>

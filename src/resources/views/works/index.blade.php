@@ -77,7 +77,7 @@
                             @foreach ($works as $work)
                                 <div class="border rounded-xl p-5 bg-white shadow-sm hover:shadow-md transition">
                                     <div class="flex justify-between items-start">
-                                        <div>
+                                        <div class="flex-1 min-w-0">
                                             <h3 class="text-xl font-bold text-gray-900">
                                                 {{ $work->title }}
                                             </h3>
@@ -132,20 +132,23 @@
                                             @endif
 
                                             @if ($work->memo)
-                                                <p class="text-sm text-gray-700 mt-2">
+                                                <p class="text-sm text-gray-700 mt-2"
+                                                style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
                                                     {{ $work->memo }}
                                                 </p>
                                             @endif
                                         </div>
 
-                                        <div class="flex gap-2">
+                                        <div class="flex gap-2 flex-shrink-0">
                                             <a href="{{ route('works.show', $work) }}"
-                                            class="px-3 py-1 bg-indigo-600 text-white rounded hover:bg-indigo-700">
-                                                詳細
-                                            </a>
+                                                class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+                                                style="white-space: nowrap;">
+                                                    詳細
+                                                </a>
 
                                             <a href="{{ route('works.edit', $work) }}"
-                                            class="px-3 py-1 bg-gray-200 text-gray-800 rounded hover:bg-gray-300">
+                                            class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300"
+                                            style="white-space: nowrap;">
                                                 編集
                                             </a>
 
@@ -155,7 +158,8 @@
                                                 @method('DELETE')
 
                                                 <button type="submit"
-                                                        class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700">
+                                                        class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+                                                        style="white-space: nowrap;">
                                                     削除
                                                 </button>
                                             </form>
