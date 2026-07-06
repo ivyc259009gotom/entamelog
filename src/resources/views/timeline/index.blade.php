@@ -35,57 +35,74 @@
                     @else
                         <div class="space-y-4">
                             @foreach ($works as $work)
-                                <div class="border rounded-xl p-5 bg-white shadow-sm">
-                                    <div class="mb-3">
-                                        <p class="text-sm text-gray-500 mb-1">
-                                            {{ $work->user->name }} さんの登録作品
-                                        </p>
+                                <div class="border rounded-xl p-5 bg-white shadow-sm hover:shadow-md transition">
+                                    <div class="flex gap-4 items-start">
 
-                                        <h3 class="text-lg font-bold text-gray-900">
-                                            {{ $work->title }}
-                                        </h3>
-
-                                        <p class="text-sm text-gray-500 mt-1">
-                                            {{ $work->type }}
-                                            @if ($work->genre)
-                                                ・{{ $work->genre }}
-                                            @endif
-                                        </p>
-                                    </div>
-
-                                    <div class="text-sm text-gray-700 space-y-1">
-                                        <p>
-                                            <span class="font-semibold">状況：</span>
-                                            {{ $work->status }}
-                                        </p>
-
-                                        <p>
-                                            <span class="font-semibold">評価：</span>
-                                            @if ($work->rating)
-                                                {{ str_repeat('★', $work->rating) }}{{ str_repeat('☆', 5 - $work->rating) }}
+                                        <div class="bg-gray-100 rounded-md overflow-hidden flex-shrink-0 border"
+                                            style="width: 96px; height: 144px;">
+                                            @if ($work->image_url)
+                                                <img src="{{ $work->image_url }}"
+                                                    alt="{{ $work->title }}"
+                                                    class="w-full h-full object-cover">
                                             @else
-                                                未評価
+                                                <div class="w-full h-full flex items-center justify-center text-xs text-gray-400 text-center px-2">
+                                                    No Image
+                                                </div>
                                             @endif
-                                        </p>
+                                        </div>
 
-                                        @if ($work->memo)
-                                            <p class="mt-3 text-gray-600 text-sm"
-                                            style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
-                                                {{ $work->memo }}
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm text-gray-500 mb-1">
+                                                {{ $work->user->name }} さんの登録作品
                                             </p>
-                                        @endif
-                                    </div>
 
-                                    <div class="mt-4 flex items-center gap-4">
-                                        <a href="{{ route('works.show', $work) }}"
-                                        class="text-indigo-600 hover:text-indigo-800 text-sm font-semibold">
-                                            作品詳細を見る
-                                        </a>
+                                            <h3 class="text-lg font-bold text-gray-900 break-words">
+                                                {{ $work->title }}
+                                            </h3>
 
-                                        <a href="{{ route('users.show', $work->user) }}"
-                                        class="text-gray-600 hover:text-gray-800 text-sm font-semibold">
-                                            {{ $work->user->name }} さんのページを見る
-                                        </a>
+                                            <p class="text-sm text-gray-500 mt-1">
+                                                {{ $work->type }}
+                                                @if ($work->genre)
+                                                    ・{{ $work->genre }}
+                                                @endif
+                                            </p>
+
+                                            <div class="text-sm text-gray-700 space-y-1 mt-3">
+                                                <p>
+                                                    <span class="font-semibold">状況：</span>
+                                                    {{ $work->status }}
+                                                </p>
+
+                                                <p>
+                                                    <span class="font-semibold">評価：</span>
+                                                    @if ($work->rating)
+                                                        {{ str_repeat('★', $work->rating) }}{{ str_repeat('☆', 5 - $work->rating) }}
+                                                    @else
+                                                        未評価
+                                                    @endif
+                                                </p>
+
+                                                @if ($work->memo)
+                                                    <p class="mt-3 text-gray-600 text-sm"
+                                                    style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                                                        {{ $work->memo }}
+                                                    </p>
+                                                @endif
+                                            </div>
+
+                                            <div class="mt-4 flex flex-wrap gap-4">
+                                                <a href="{{ route('works.show', $work) }}"
+                                                class="text-indigo-600 hover:text-indigo-800 text-sm font-semibold">
+                                                    作品詳細を見る
+                                                </a>
+
+                                                <a href="{{ route('users.show', $work->user) }}"
+                                                class="text-gray-600 hover:text-gray-800 text-sm font-semibold">
+                                                    {{ $work->user->name }} さんのページを見る
+                                                </a>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             @endforeach
