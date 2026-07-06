@@ -38,12 +38,13 @@ class WorkController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'type' => ['required', 'string', 'max:50'],
-            'genre' => ['nullable', 'string', 'max:100'],
-            'status' => ['required', 'string', 'max:50'],
-            'rating' => ['nullable', 'integer', 'min:1', 'max:5'],
-            'memo' => ['nullable', 'string'],
+            'title' => 'required|max:255',
+            'type' => 'required',
+            'genre' => 'nullable|max:255',
+            'status' => 'required',
+            'rating' => 'nullable|integer|min:1|max:5',
+            'memo' => 'nullable',
+            'image_url' => 'nullable|url|max:1000',
         ]);
 
         $validated['user_id'] = Auth::id();
@@ -85,12 +86,13 @@ class WorkController extends Controller
         }
 
         $validated = $request->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'type' => ['required', 'string', 'max:50'],
-            'genre' => ['nullable', 'string', 'max:100'],
-            'status' => ['required', 'string', 'max:50'],
-            'rating' => ['nullable', 'integer', 'min:1', 'max:5'],
-            'memo' => ['nullable', 'string'],
+            'title' => 'required|max:255',
+            'type' => 'required',
+            'genre' => 'nullable|max:255',
+            'status' => 'required',
+            'rating' => 'nullable|integer|min:1|max:5',
+            'memo' => 'nullable',
+            'image_url' => 'nullable|url|max:1000',
         ]);
 
         $work->update($validated);

@@ -18,8 +18,9 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 space-y-6">
 
-                    <div>
-                        <h3 class="text-2xl font-bold text-gray-900">
+                    <div class="mb-4">
+                        <h3 class="font-bold text-gray-900 break-words"
+                            style="font-size: 28px; line-height: 1.4;">
                             {{ $work->title }}
                         </h3>
 
@@ -28,73 +29,92 @@
                         </p>
                     </div>
 
-                    <div class="border-t pt-4 space-y-3">
-                        <p>
-                            <span class="font-semibold text-gray-700">種別：</span>
-                            {{ $work->type }}
-                        </p>
+                    <div class="border-t pt-6">
+                        <div class="flex items-start" style="gap: 48px;">
 
-                        <p>
-                            <span class="font-semibold text-gray-700">ジャンル：</span>
-                            {{ $work->genre ?: '未設定' }}
-                        </p>
-
-                        <div>
-                            <span class="font-semibold text-gray-700">状況：</span>
-
-                            @if ($work->status === '観たい')
-                                <span class="inline-block px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">
-                                    観たい
-                                </span>
-                            @elseif ($work->status === '視聴中')
-                                <span class="inline-block px-2 py-1 text-xs rounded-full bg-purple-100 text-purple-800">
-                                    視聴中
-                                </span>
-                            @elseif ($work->status === '完了')
-                                <span class="inline-block px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">
-                                    完了
-                                </span>
-                            @elseif ($work->status === '中断')
-                                <span class="inline-block px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-800">
-                                    中断
-                                </span>
-                            @else
-                                <span class="inline-block px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-800">
-                                    {{ $work->status }}
-                                </span>
-                            @endif
-                        </div>
-
-                        <p>
-                            <span class="font-semibold text-gray-700">評価：</span>
-
-                            @if ($work->rating)
-                                <span class="text-yellow-500">
-                                    @for ($i = 1; $i <= 5; $i++)
-                                        @if ($i <= $work->rating)
-                                            ★
-                                        @else
-                                            ☆
-                                        @endif
-                                    @endfor
-                                </span>
-                            @else
-                                未評価
-                            @endif
-                        </p>
-
-                        <div>
-                            <p class="font-semibold text-gray-700">感想・メモ：</p>
-
-                            <div class="mt-2 p-4 bg-gray-50 rounded-md text-gray-800 text-left"
-                                style="text-align: left; word-break: break-all;">
-                                {{ $work->memo ?: 'メモはありません。' }}
+                            <div class="bg-gray-100 rounded-lg overflow-hidden flex-shrink-0 border"
+                                style="width: 150px; height: 225px;">
+                                @if ($work->image_url)
+                                    <img src="{{ $work->image_url }}"
+                                        alt="{{ $work->title }}"
+                                        class="w-full h-full object-cover">
+                                @else
+                                    <div class="w-full h-full flex items-center justify-center text-sm text-gray-400 text-center px-3">
+                                        No Image
+                                    </div>
+                                @endif
                             </div>
+
+                            <div class="flex-1 min-w-0 space-y-4 pt-2">
+                                <p>
+                                    <span class="font-semibold text-gray-700">種別：</span>
+                                    {{ $work->type }}
+                                </p>
+
+                                <p>
+                                    <span class="font-semibold text-gray-700">ジャンル：</span>
+                                    {{ $work->genre ?: '未設定' }}
+                                </p>
+
+                                <div>
+                                    <span class="font-semibold text-gray-700">状況：</span>
+
+                                    @if ($work->status === '観たい')
+                                        <span class="inline-block px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">
+                                            観たい
+                                        </span>
+                                    @elseif ($work->status === '視聴中')
+                                        <span class="inline-block px-2 py-1 text-xs rounded-full bg-purple-100 text-purple-800">
+                                            視聴中
+                                        </span>
+                                    @elseif ($work->status === '完了')
+                                        <span class="inline-block px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">
+                                            完了
+                                        </span>
+                                    @elseif ($work->status === '中断')
+                                        <span class="inline-block px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-800">
+                                            中断
+                                        </span>
+                                    @else
+                                        <span class="inline-block px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-800">
+                                            {{ $work->status }}
+                                        </span>
+                                    @endif
+                                </div>
+
+                                <p>
+                                    <span class="font-semibold text-gray-700">評価：</span>
+
+                                    @if ($work->rating)
+                                        <span class="text-yellow-500">
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                @if ($i <= $work->rating)
+                                                    ★
+                                                @else
+                                                    ☆
+                                                @endif
+                                            @endfor
+                                        </span>
+                                    @else
+                                        未評価
+                                    @endif
+                                </p>
+
+                                <div>
+                                    <p class="font-semibold text-gray-700">感想・メモ：</p>
+
+                                    <div class="mt-2 p-4 bg-gray-50 rounded-md text-gray-800 text-left"
+                                        style="text-align: left; word-break: break-all;">
+                                        {{ $work->memo ?: 'メモはありません。' }}
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
                     @if ($work->user_id === Auth::id())
-                        <div class="flex gap-3 border-t pt-4">
+                        <div class="flex justify-end gap-3 border-t pt-4">
                             <a href="{{ route('works.edit', $work) }}"
                                 class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
                                 style="white-space: nowrap;">

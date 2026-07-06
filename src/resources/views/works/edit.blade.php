@@ -105,6 +105,26 @@
                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">{{ old('memo', $work->memo) }}</textarea>
                         </div>
 
+                        <div>
+                            <label class="block font-medium text-sm text-gray-700">
+                                画像URL
+                            </label>
+
+                            <input type="url"
+                                name="image_url"
+                                value="{{ old('image_url', $work->image_url) }}"
+                                placeholder="https://example.com/image.jpg"
+                                class="block mt-1 w-full rounded-md border-gray-300 shadow-sm">
+
+                            <p class="mt-1 text-sm text-gray-500">
+                                作品画像のURLを入力できます。未入力でも保存できます。
+                            </p>
+
+                            @error('image_url')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
                         <div class="flex gap-3">
                             <button type="submit"
                                     class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">

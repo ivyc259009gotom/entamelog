@@ -15,6 +15,7 @@ class Work extends Model
         'status',
         'rating',
         'memo',
+        'image_url',
     ];
 
     public function user(): BelongsTo

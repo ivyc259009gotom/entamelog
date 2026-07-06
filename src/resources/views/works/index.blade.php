@@ -76,9 +76,23 @@
                         <div class="grid gap-4 md:grid-cols-2">
                             @foreach ($works as $work)
                                 <div class="border rounded-xl p-5 bg-white shadow-sm hover:shadow-md transition">
-                                    <div class="flex justify-between items-start">
+                                    <div class="flex gap-4 items-start">
+
+                                        <div class="bg-gray-100 rounded-md overflow-hidden flex-shrink-0 border"
+                                            style="width: 96px; height: 144px;">
+                                            @if ($work->image_url)
+                                                <img src="{{ $work->image_url }}"
+                                                    alt="{{ $work->title }}"
+                                                    class="w-full h-full object-cover">
+                                            @else
+                                                <div class="w-full h-full flex items-center justify-center text-xs text-gray-400 text-center px-2">
+                                                    No Image
+                                                </div>
+                                            @endif
+                                        </div>
+
                                         <div class="flex-1 min-w-0">
-                                            <h3 class="text-xl font-bold text-gray-900">
+                                            <h3 class="text-xl font-bold text-gray-900 break-words">
                                                 {{ $work->title }}
                                             </h3>
 
@@ -111,13 +125,13 @@
                                             </div>
 
                                             @if ($work->genre)
-                                                <p class="text-sm text-gray-600">
+                                                <p class="text-sm text-gray-600 mt-1">
                                                     ジャンル：{{ $work->genre }}
                                                 </p>
                                             @endif
 
                                             @if ($work->rating)
-                                                <p class="text-sm text-gray-600">
+                                                <p class="text-sm text-gray-600 mt-1">
                                                     評価：
                                                     <span class="text-yellow-500">
                                                         @for ($i = 1; $i <= 5; $i++)
@@ -137,33 +151,34 @@
                                                     {{ $work->memo }}
                                                 </p>
                                             @endif
-                                        </div>
 
-                                        <div class="flex gap-2 flex-shrink-0">
-                                            <a href="{{ route('works.show', $work) }}"
+                                            <div class="mt-4 flex flex-wrap gap-2">
+                                                <a href="{{ route('works.show', $work) }}"
                                                 class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
                                                 style="white-space: nowrap;">
                                                     詳細
                                                 </a>
 
-                                            <a href="{{ route('works.edit', $work) }}"
-                                            class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300"
-                                            style="white-space: nowrap;">
-                                                編集
-                                            </a>
+                                                <a href="{{ route('works.edit', $work) }}"
+                                                class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300"
+                                                style="white-space: nowrap;">
+                                                    編集
+                                                </a>
 
-                                            <form action="{{ route('works.destroy', $work) }}" method="POST"
-                                                onsubmit="return confirm('この作品を削除しますか？');">
-                                                @csrf
-                                                @method('DELETE')
+                                                <form action="{{ route('works.destroy', $work) }}" method="POST"
+                                                    onsubmit="return confirm('この作品を削除しますか？');">
+                                                    @csrf
+                                                    @method('DELETE')
 
-                                                <button type="submit"
-                                                        class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
-                                                        style="white-space: nowrap;">
-                                                    削除
-                                                </button>
-                                            </form>
+                                                    <button type="submit"
+                                                            class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+                                                            style="white-space: nowrap;">
+                                                        削除
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </div>
+
                                     </div>
                                 </div>
                             @endforeach
