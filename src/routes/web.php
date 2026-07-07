@@ -7,6 +7,7 @@ use App\Http\Controllers\FollowController;
 use App\Http\Controllers\TimelineController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TmdbController;
+use App\Http\Controllers\BookController;
 
 
 Route::get('/', function () {
@@ -32,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/tmdb/search', [TmdbController::class, 'search'])->name('tmdb.search');
+    Route::get('/books/search', [BookController::class, 'search'])->name('books.search');
 });
 
 require __DIR__.'/auth.php';

@@ -67,6 +67,6 @@ class TmdbController extends Controller
             })
             ->values();
 
-        return response()->json($results);
+        return response()->json($results, 200, [], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
     }
 }

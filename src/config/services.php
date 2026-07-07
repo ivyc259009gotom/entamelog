@@ -40,4 +40,8 @@ return [
         'image_base_url' => 'https://image.tmdb.org/t/p/w500',
     ],
 
+    'google_books' => [
+        'api_key' => env('GOOGLE_BOOKS_API_KEY'),
+    ],
+
 ];
