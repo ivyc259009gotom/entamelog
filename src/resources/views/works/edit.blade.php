@@ -125,14 +125,22 @@
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
 
-                            <div class="mt-3 flex items-center gap-3">
+                            <div class="mt-3 flex items-center gap-3 flex-wrap">
                                 <button type="button"
                                     id="tmdb-search-button"
-                                    class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+                                    class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+                                    style="white-space: nowrap;">
                                     TMDbで画像検索
                                 </button>
 
-                                <span id="tmdb-search-message" class="text-sm text-gray-500"></span>
+                                <button type="button"
+                                    id="book-search-button"
+                                    class="px-4 py-2 text-white rounded-md"
+                                    style="background-color: #16a34a; white-space: nowrap;">
+                                    Google Booksで画像検索
+                                </button>
+
+                                <span id="image-search-message" class="text-sm text-gray-500"></span>
                             </div>
 
                             <div id="selected-image-preview" class="mt-4 hidden">
@@ -173,8 +181,9 @@
         document.addEventListener('DOMContentLoaded', function() {
             const titleInput = document.getElementById('title');
             const imageUrlInput = document.getElementById('image_url');
-            const searchButton = document.getElementById('tmdb-search-button');
-            const messageArea = document.getElementById('tmdb-search-message');
+            const tmdbSearchButton = document.getElementById('tmdb-search-button');
+            const bookSearchButton = document.getElementById('book-search-button');
+            const messageArea = document.getElementById('image-search-message');
             const resultsArea = document.getElementById('tmdb-search-results');
             const previewArea = document.getElementById('selected-image-preview');
             const previewImage = document.getElementById('selected-image-preview-img');
@@ -195,7 +204,7 @@
                 updatePreview(imageUrlInput.value);
             });
 
-            searchButton.addEventListener('click', async function() {
+            async function searchImages(searchUrl, type) {
                 const keyword = titleInput.value.trim();
 
                 if (!keyword) {
@@ -208,11 +217,11 @@
                 resultsArea.innerHTML = '';
 
                 try {
-                    const response = await fetch(`/tmdb/search?keyword=${encodeURIComponent(keyword)}`);
+                    const response = await fetch(`${searchUrl}?keyword=${encodeURIComponent(keyword)}`);
                     const data = await response.json();
 
                     if (!response.ok) {
-                        throw new Error(data.message || 'TMDb検索に失敗しました。');
+                        throw new Error(data.message || '画像検索に失敗しました。');
                     }
 
                     if (data.message) {
@@ -230,33 +239,49 @@
                         const card = document.createElement('div');
                         card.className = 'border rounded-xl p-4 bg-white shadow-sm';
 
-                        const mediaTypeLabel = item.media_type === 'tv' ? 'ドラマ / TV' : '映画';
+                        let imageUrl = '';
+                        let title = '';
+                        let subText = '';
+                        let typeLabel = '';
+
+                        if (type === 'tmdb') {
+                            imageUrl = item.poster_url || '';
+                            title = item.title || '';
+                            subText = item.release_date || '';
+                            typeLabel = item.media_type === 'tv' ? 'ドラマ / TV' : '映画';
+                        } else if (type === 'books') {
+                            imageUrl = item.thumbnail_url || '';
+                            title = item.title || '';
+                            subText = Array.isArray(item.authors) ? item.authors.join('、') : '';
+                            typeLabel = '本 / 漫画';
+                        }
 
                         card.innerHTML = `
-                    <div class="bg-gray-100 rounded-md overflow-hidden border mx-auto"
-                        style="width: 120px; height: 180px;">
-                        ${item.poster_url
-                            ? `<img src="${item.poster_url}" alt="${item.title}" class="w-full h-full object-cover">`
-                            : `<div class="w-full h-full flex items-center justify-center text-xs text-gray-400 text-center px-2">No Image</div>`
-                        }
-                    </div>
+                <div class="bg-gray-100 rounded-md overflow-hidden border mx-auto"
+                     style="width: 120px; height: 180px;">
+                    ${imageUrl
+                        ? `<img src="${imageUrl}" alt="${title}" class="w-full h-full object-cover">`
+                        : `<div class="w-full h-full flex items-center justify-center text-xs text-gray-400 text-center px-2">No Image</div>`
+                    }
+                </div>
 
-                    <div class="mt-3">
-                        <p class="text-xs text-gray-500">${mediaTypeLabel}</p>
-                        <h4 class="font-bold text-gray-900 mt-1">${item.title || ''}</h4>
-                        <p class="text-sm text-gray-500 mt-1">${item.release_date || ''}</p>
-                    </div>
+                <div class="mt-3">
+                    <p class="text-xs text-gray-500">${typeLabel}</p>
+                    <h4 class="font-bold text-gray-900 mt-1">${title}</h4>
+                    <p class="text-sm text-gray-500 mt-1">${subText}</p>
+                    ${item.published_date ? `<p class="text-xs text-gray-400 mt-1">${item.published_date}</p>` : ''}
+                </div>
 
-                    <button type="button"
-                            class="mt-4 w-full px-3 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 tmdb-select-button">
-                        この画像を使う
-                    </button>
-                `;
+                <button type="button"
+                        class="mt-4 w-full px-3 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 image-select-button">
+                    この画像を使う
+                </button>
+            `;
 
-                        const selectButton = card.querySelector('.tmdb-select-button');
+                        const selectButton = card.querySelector('.image-select-button');
                         selectButton.addEventListener('click', function() {
-                            imageUrlInput.value = item.poster_url || '';
-                            updatePreview(item.poster_url || '');
+                            imageUrlInput.value = imageUrl;
+                            updatePreview(imageUrl);
                             messageArea.textContent = '画像を選択しました。';
                             window.scrollTo({
                                 top: imageUrlInput.offsetTop - 120,
@@ -271,6 +296,14 @@
                     console.error(error);
                     messageArea.textContent = error.message || '検索に失敗しました。';
                 }
+            }
+
+            tmdbSearchButton.addEventListener('click', function() {
+                searchImages('/tmdb/search', 'tmdb');
+            });
+
+            bookSearchButton.addEventListener('click', function() {
+                searchImages('/books/search', 'books');
             });
         });
     </script>
