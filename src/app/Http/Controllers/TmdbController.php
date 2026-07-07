@@ -26,7 +26,7 @@ class TmdbController extends Controller
             ], 500);
         }
 
-        $response = Http::get('https://api.themoviedb.org/3/search/movie', [
+        $response = Http::get('https://api.themoviedb.org/3/search/multi', [
             'api_key' => $apiKey,
             'query' => $keyword,
             'language' => 'ja-JP',
@@ -41,18 +41,31 @@ class TmdbController extends Controller
         }
 
         $results = collect($response->json('results'))
-            ->take(5)
+            ->filter(function ($item) {
+                return in_array($item['media_type'] ?? '', ['movie', 'tv']);
+            })
+            ->take(8)
             ->map(function ($item) use ($imageBaseUrl) {
+                $mediaType = $item['media_type'] ?? '';
+
                 return [
-                    'title' => $item['title'] ?? '',
-                    'original_title' => $item['original_title'] ?? '',
-                    'release_date' => $item['release_date'] ?? '',
+                    'media_type' => $mediaType,
+                    'title' => $mediaType === 'tv'
+                        ? ($item['name'] ?? '')
+                        : ($item['title'] ?? ''),
+                    'original_title' => $mediaType === 'tv'
+                        ? ($item['original_name'] ?? '')
+                        : ($item['original_title'] ?? ''),
+                    'release_date' => $mediaType === 'tv'
+                        ? ($item['first_air_date'] ?? '')
+                        : ($item['release_date'] ?? ''),
                     'overview' => $item['overview'] ?? '',
                     'poster_url' => ! empty($item['poster_path'])
                         ? $imageBaseUrl . $item['poster_path']
                         : null,
                 ];
-            });
+            })
+            ->values();
 
         return response()->json($results);
     }
