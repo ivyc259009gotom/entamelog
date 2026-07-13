@@ -94,14 +94,17 @@
                                             @endif
                                         </div>
 
-                                        <p>
-                                            <span class="font-semibold">評価：</span>
+                                        <div class="mt-2">
+                                            <span class="font-semibold text-gray-700">評価：</span>
+
                                             @if ($work->rating)
-                                            {{ str_repeat('★', $work->rating) }}{{ str_repeat('☆', 5 - $work->rating) }}
+                                            <span class="text-yellow-500">
+                                                {{ str_repeat('★', $work->rating) }}{{ str_repeat('☆', 5 - $work->rating) }}
+                                            </span>
                                             @else
-                                            未評価
+                                            <span class="text-gray-400">未評価</span>
                                             @endif
-                                        </p>
+                                        </div>
 
                                         @if ($work->memo)
                                         <p class="mt-3 text-gray-600 text-sm"
@@ -111,14 +114,14 @@
                                         @endif
                                     </div>
 
-                                    <div class="mt-4 flex flex-wrap gap-4">
+                                    <div class="mt-5 flex items-center gap-3 flex-wrap">
                                         <a href="{{ route('works.show', $work) }}"
-                                            class="text-indigo-600 hover:text-indigo-800 text-sm font-semibold">
+                                            class="inline-block px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-md hover:bg-indigo-700">
                                             作品詳細を見る
                                         </a>
 
                                         <a href="{{ route('users.show', $work->user) }}"
-                                            class="text-gray-600 hover:text-gray-800 text-sm font-semibold">
+                                            class="inline-block px-4 py-2 bg-gray-100 text-gray-800 text-sm font-semibold rounded-md hover:bg-gray-200">
                                             {{ $work->user->name }} さんのページを見る
                                         </a>
                                     </div>
