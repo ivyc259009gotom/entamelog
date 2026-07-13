@@ -35,13 +35,13 @@
                             <div class="bg-gray-100 rounded-lg overflow-hidden flex-shrink-0 border"
                                 style="width: 150px; height: 225px;">
                                 @if ($work->image_url)
-                                    <img src="{{ $work->image_url }}"
-                                        alt="{{ $work->title }}"
-                                        class="w-full h-full object-cover">
+                                <img src="{{ $work->image_url }}"
+                                    alt="{{ $work->title }}"
+                                    class="w-full h-full object-cover">
                                 @else
-                                    <div class="w-full h-full flex items-center justify-center text-sm text-gray-400 text-center px-3">
-                                        No Image
-                                    </div>
+                                <div class="w-full h-full flex items-center justify-center text-sm text-gray-400 text-center px-3">
+                                    No Image
+                                </div>
                                 @endif
                             </div>
 
@@ -59,26 +59,26 @@
                                 <div>
                                     <span class="font-semibold text-gray-700">状況：</span>
 
-                                    @if ($work->status === '観たい')
-                                        <span class="inline-block px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">
-                                            観たい
-                                        </span>
-                                    @elseif ($work->status === '視聴中')
-                                        <span class="inline-block px-2 py-1 text-xs rounded-full bg-purple-100 text-purple-800">
-                                            視聴中
-                                        </span>
+                                    @if ($work->status === '気になる')
+                                    <span class="inline-block px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">
+                                        気になる
+                                    </span>
+                                    @elseif ($work->status === '進行中')
+                                    <span class="inline-block px-2 py-1 text-xs rounded-full bg-purple-100 text-purple-800">
+                                        進行中
+                                    </span>
                                     @elseif ($work->status === '完了')
-                                        <span class="inline-block px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">
-                                            完了
-                                        </span>
+                                    <span class="inline-block px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">
+                                        完了
+                                    </span>
                                     @elseif ($work->status === '中断')
-                                        <span class="inline-block px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-800">
-                                            中断
-                                        </span>
+                                    <span class="inline-block px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-800">
+                                        中断
+                                    </span>
                                     @else
-                                        <span class="inline-block px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-800">
-                                            {{ $work->status }}
-                                        </span>
+                                    <span class="inline-block px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-800">
+                                        {{ $work->status }}
+                                    </span>
                                     @endif
                                 </div>
 
@@ -86,17 +86,17 @@
                                     <span class="font-semibold text-gray-700">評価：</span>
 
                                     @if ($work->rating)
-                                        <span class="text-yellow-500">
-                                            @for ($i = 1; $i <= 5; $i++)
-                                                @if ($i <= $work->rating)
-                                                    ★
-                                                @else
-                                                    ☆
-                                                @endif
+                                    <span class="text-yellow-500">
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            @if ($i <=$work->rating)
+                                            ★
+                                            @else
+                                            ☆
+                                            @endif
                                             @endfor
-                                        </span>
+                                    </span>
                                     @else
-                                        未評価
+                                    未評価
                                     @endif
                                 </p>
 
@@ -114,25 +114,25 @@
                     </div>
 
                     @if ($work->user_id === Auth::id())
-                        <div class="flex justify-end gap-3 border-t pt-4">
-                            <a href="{{ route('works.edit', $work) }}"
-                                class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+                    <div class="flex justify-end gap-3 border-t pt-4">
+                        <a href="{{ route('works.edit', $work) }}"
+                            class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+                            style="white-space: nowrap;">
+                            編集
+                        </a>
+
+                        <form action="{{ route('works.destroy', $work) }}" method="POST"
+                            onsubmit="return confirm('この作品を削除しますか？');">
+                            @csrf
+                            @method('DELETE')
+
+                            <button type="submit"
+                                class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
                                 style="white-space: nowrap;">
-                                編集
-                            </a>
-
-                            <form action="{{ route('works.destroy', $work) }}" method="POST"
-                                onsubmit="return confirm('この作品を削除しますか？');">
-                                @csrf
-                                @method('DELETE')
-
-                                <button type="submit"
-                                        class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
-                                        style="white-space: nowrap;">
-                                    削除
-                                </button>
-                            </form>
-                        </div>
+                                削除
+                            </button>
+                        </form>
+                    </div>
                     @endif
                 </div>
             </div>

@@ -103,11 +103,11 @@
                                             <div class="mt-2">
                                                 @if ($work->status === '気になる')
                                                     <span class="inline-block px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">
-                                                        観たい
+                                                        気になる
                                                     </span>
                                                 @elseif ($work->status === '進行中')
                                                     <span class="inline-block px-2 py-1 text-xs rounded-full bg-purple-100 text-purple-800">
-                                                        視聴中
+                                                        進行中
                                                     </span>
                                                 @elseif ($work->status === '完了')
                                                     <span class="inline-block px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">
