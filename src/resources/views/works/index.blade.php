@@ -48,8 +48,8 @@
                                     class="rounded-md border-gray-300 shadow-sm"
                                     style="min-width: 140px;">
                                 <option value="">すべての状況</option>
-                                <option value="観たい" @selected(($status ?? '') === '観たい')>観たい</option>
-                                <option value="視聴中" @selected(($status ?? '') === '視聴中')>視聴中</option>
+                                <option value="気になる" @selected(($status ?? '') === '気になる')>気になる</option>
+                                <option value="進行中" @selected(($status ?? '') === '進行中')>進行中</option>
                                 <option value="完了" @selected(($status ?? '') === '完了')>完了</option>
                                 <option value="中断" @selected(($status ?? '') === '中断')>中断</option>
                             </select>
@@ -101,11 +101,11 @@
                                             </p>
 
                                             <div class="mt-2">
-                                                @if ($work->status === '観たい')
+                                                @if ($work->status === '気になる')
                                                     <span class="inline-block px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">
                                                         観たい
                                                     </span>
-                                                @elseif ($work->status === '視聴中')
+                                                @elseif ($work->status === '進行中')
                                                     <span class="inline-block px-2 py-1 text-xs rounded-full bg-purple-100 text-purple-800">
                                                         視聴中
                                                     </span>

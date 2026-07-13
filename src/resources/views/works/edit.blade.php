@@ -75,8 +75,8 @@
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
                                 required>
                                 <option value="">選択してください</option>
-                                <option value="観たい" @selected(old('status', $work->status) === '観たい')>観たい</option>
-                                <option value="視聴中" @selected(old('status', $work->status) === '視聴中')>視聴中</option>
+                                <option value="気になる" @selected(old('status', $work->status) === '気になる')>気になる</option>
+                                <option value="進行中" @selected(old('status', $work->status) === '進行中')>進行中</option>
                                 <option value="完了" @selected(old('status', $work->status) === '完了')>完了</option>
                                 <option value="中断" @selected(old('status', $work->status) === '中断')>中断</option>
                             </select>
@@ -125,22 +125,33 @@
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
 
-                            <div class="mt-3 flex items-center gap-3 flex-wrap">
-                                <button type="button"
-                                    id="tmdb-search-button"
-                                    class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
-                                    style="white-space: nowrap;">
-                                    TMDbで画像検索
-                                </button>
+                            <div class="mt-4 p-4 bg-gray-50 border rounded-xl">
+                                <p class="text-sm font-semibold text-gray-700">
+                                    外部APIから画像を検索
+                                </p>
 
-                                <button type="button"
-                                    id="book-search-button"
-                                    class="px-4 py-2 text-white rounded-md"
-                                    style="background-color: #16a34a; white-space: nowrap;">
-                                    Google Booksで画像検索
-                                </button>
+                                <p class="mt-1 text-sm text-gray-500">
+                                    映画・ドラマ・アニメはTMDb、本・漫画はGoogle Booksから画像候補を検索できます。
+                                    候補から選んだ画像URLが自動で入力されます。
+                                </p>
 
-                                <span id="image-search-message" class="text-sm text-gray-500"></span>
+                                <div class="mt-3 flex items-center gap-3 flex-wrap">
+                                    <button type="button"
+                                        id="tmdb-search-button"
+                                        class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+                                        style="white-space: nowrap;">
+                                        TMDbで画像検索
+                                    </button>
+
+                                    <button type="button"
+                                        id="book-search-button"
+                                        class="px-4 py-2 text-white rounded-md"
+                                        style="background-color: #16a34a; white-space: nowrap;">
+                                        Google Booksで画像検索
+                                    </button>
+
+                                    <span id="image-search-message" class="text-sm text-gray-500"></span>
+                                </div>
                             </div>
 
                             <div id="selected-image-preview" class="mt-4 hidden">
@@ -155,7 +166,13 @@
                                 </div>
                             </div>
 
-                            <div id="tmdb-search-results" class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
+                            <div class="mt-4">
+                                <p class="text-sm font-semibold text-gray-700">
+                                    画像候補
+                                </p>
+
+                                <div id="tmdb-search-results" class="mt-3 grid grid-cols-2 md:grid-cols-4 gap-4"></div>
+                            </div>
                         </div>
 
                         <div class="flex gap-3">
