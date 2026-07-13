@@ -78,8 +78,8 @@
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
                                 required>
                                 <option value="">選択してください</option>
-                                <option value="観たい" @selected(old('status')==='観たい' )>観たい</option>
-                                <option value="視聴中" @selected(old('status')==='視聴中' )>視聴中</option>
+                                <option value="観たい" @selected(old('status')==='気になる' )>気になる</option>
+                                <option value="視聴中" @selected(old('status')==='進行中' )>進行中</option>
                                 <option value="完了" @selected(old('status')==='完了' )>完了</option>
                                 <option value="中断" @selected(old('status')==='中断' )>中断</option>
                             </select>
