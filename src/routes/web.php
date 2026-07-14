@@ -8,6 +8,7 @@ use App\Http\Controllers\TimelineController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TmdbController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\ProfileEditController;
 
 
 Route::get('/', function () {
@@ -34,6 +35,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/tmdb/search', [TmdbController::class, 'search'])->name('tmdb.search');
     Route::get('/books/search', [BookController::class, 'search'])->name('books.search');
-});
+
+    Route::get('/profile-edit', [ProfileEditController::class, 'edit'])->name('profile.edit.custom');
+    Route::put('/profile-edit', [ProfileEditController::class, 'update'])->name('profile.update.custom');
+    });
 
 require __DIR__.'/auth.php';

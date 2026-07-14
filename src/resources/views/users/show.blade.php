@@ -17,51 +17,66 @@
                     </div>
                     @endif
 
-                    <div class="mb-8 flex items-start justify-between gap-4">
-                        <div class="flex items-center gap-4">
-                            <div class="rounded-full bg-gray-200 flex items-center justify-center text-xl font-bold text-gray-500 flex-shrink-0"
-                                style="width: 64px; height: 64px;">
-                                {{ mb_substr($user->name, 0, 1) }}
+                    <div class="mb-10 p-6 border rounded-xl bg-white">
+                        <div class="flex items-center justify-between gap-4">
+                            <div class="flex items-start gap-10 min-w-0">
+                                <div class="rounded-full bg-gray-200 overflow-hidden flex items-center justify-center text-xl font-bold text-gray-500 flex-shrink-0"
+                                    style="width: 72px; height: 72px; min-width: 72px; margin-right: 24px;">
+                                    @if ($user->profile_image_url)
+                                    <img src="{{ $user->profile_image_url }}"
+                                        alt="{{ $user->name }}"
+                                        class="w-full h-full object-cover">
+                                    @else
+                                    {{ mb_substr($user->name, 0, 1) }}
+                                    @endif
+                                </div>
+
+                                <div class="min-w-0">
+                                    <h3 class="text-2xl font-bold text-gray-900 break-words">
+                                        {{ $user->name }}
+                                    </h3>
+
+                                    <p class="mt-2 text-sm text-gray-500 leading-relaxed"
+                                        style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                                        {{ $user->bio ?: 'エンタメログユーザー' }}
+                                    </p>
+                                </div>
                             </div>
 
-                            <div>
-                                <h3 class="text-2xl font-bold text-gray-900">
-                                    {{ $user->name }}
-                                </h3>
+                            <div class="flex-shrink-0">
+                                @if (Auth::id() === $user->id)
+                                <a href="{{ route('profile.edit.custom') }}"
+                                    class="inline-block px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+                                    style="white-space: nowrap;">
+                                    プロフィール編集
+                                </a>
+                                @elseif (Auth::user()->isFollowing($user))
+                                <form action="{{ route('follows.destroy', $user) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
 
-                                <p class="mt-1 text-sm text-gray-500">
-                                    エンタメログユーザー
-                                </p>
+                                    <button type="submit"
+                                        class="px-4 py-2 border border-red-300 bg-white text-red-600 rounded-md hover:bg-red-50"
+                                        style="white-space: nowrap;">
+                                        フォロー解除
+                                    </button>
+                                </form>
+                                @else
+                                <form action="{{ route('follows.store', $user) }}" method="POST">
+                                    @csrf
+
+                                    <button type="submit"
+                                        class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+                                        style="white-space: nowrap;">
+                                        フォロー
+                                    </button>
+                                </form>
+                                @endif
                             </div>
-                        </div>
-
-                        <div>
-                            @if (Auth::user()->isFollowing($user))
-                            <form action="{{ route('follows.destroy', $user) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-
-                                <button type="submit"
-                                    class="px-4 py-2 border border-red-300 bg-white text-red-600 rounded-md hover:bg-red-50"
-                                    style="white-space: nowrap;">
-                                    フォロー解除
-                                </button>
-                            </form>
-                            @else
-                            <form action="{{ route('follows.store', $user) }}" method="POST">
-                                @csrf
-
-                                <button type="submit"
-                                    class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
-                                    style="white-space: nowrap;">
-                                    フォロー
-                                </button>
-                            </form>
-                            @endif
                         </div>
                     </div>
 
-                    <div class="mt-12 pt-6 border-t mb-5 flex items-center gap-2">
+                    <div class="mb-5 flex items-center gap-2">
                         <h4 class="text-xl font-bold text-gray-900">
                             登録作品
                         </h4>
