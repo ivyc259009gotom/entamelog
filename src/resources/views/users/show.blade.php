@@ -107,9 +107,10 @@
                                             @if ($work->genre)
                                             <span class="mx-1 text-gray-300">／</span>
                                             <span class="font-semibold text-gray-600">ジャンル：</span>
-                                            <span class="text-teal-600 hover:underline">
+                                            <a href="{{ route('works.index', ['genre' => $work->genre]) }}"
+                                                class="text-teal-600 hover:underline">
                                                 {{ $work->genre }}
-                                            </span>
+                                            </a>
                                             @endif
                                         </p>
                                     </div>

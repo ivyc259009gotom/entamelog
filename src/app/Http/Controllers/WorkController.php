@@ -13,6 +13,7 @@ class WorkController extends Controller
         $keyword = $request->input('keyword');
         $type = $request->input('type');
         $status = $request->input('status');
+        $genre = $request->input('genre');
 
         $works = Work::where('user_id', Auth::id())
             ->when($keyword, function ($query, $keyword) {
@@ -24,10 +25,13 @@ class WorkController extends Controller
             ->when($status, function ($query, $status) {
                 return $query->where('status', $status);
             })
+            ->when($genre, function ($query, $genre) {
+                return $query->where('genre', $genre);
+            })
             ->latest()
             ->get();
 
-        return view('works.index', compact('works', 'keyword', 'type', 'status'));
+        return view('works.index', compact('works', 'keyword', 'type', 'status', 'genre'));
     }
 
     public function create()
