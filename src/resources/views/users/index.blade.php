@@ -47,9 +47,15 @@
                         <div class="border rounded-xl p-5 bg-white shadow-sm">
                             <div class="flex items-center justify-between gap-4">
                                 <div class="flex items-center gap-4 min-w-0">
-                                    <div class="rounded-full bg-gray-200 flex items-center justify-center text-lg font-bold text-gray-500 flex-shrink-0"
-                                        style="width: 56px; height: 56px;">
+                                    <div class="rounded-full bg-gray-200 overflow-hidden flex items-center justify-center text-lg font-bold text-gray-500 flex-shrink-0"
+                                        style="width: 56px; height: 56px; min-width: 56px;">
+                                        @if ($user->profile_image_url)
+                                        <img src="{{ $user->profile_image_url }}"
+                                            alt="{{ $user->name }}"
+                                            class="w-full h-full object-cover">
+                                        @else
                                         {{ mb_substr($user->name, 0, 1) }}
+                                        @endif
                                     </div>
 
                                     <div class="min-w-0">
@@ -57,8 +63,9 @@
                                             {{ $user->name }}
                                         </h3>
 
-                                        <p class="text-sm text-gray-500 mt-1">
-                                            エンタメログユーザー
+                                        <p class="text-sm text-gray-500 mt-1"
+                                            style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;">
+                                            {{ $user->bio ?: 'エンタメログユーザー' }}
                                         </p>
 
                                         <p class="text-sm text-gray-500 mt-1">
