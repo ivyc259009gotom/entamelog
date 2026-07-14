@@ -101,17 +101,17 @@
                                             {{ $work->title }}
                                         </h5>
 
-                                        <div class="mt-2 flex items-center gap-2 flex-wrap">
-                                            <span class="inline-block px-2 py-1 text-xs rounded-full bg-indigo-50 text-indigo-700">
-                                                {{ $work->type }}
-                                            </span>
+                                        <p class="text-sm text-gray-500 mt-2">
+                                            <span class="font-semibold text-gray-600">種別：</span>{{ $work->type }}
 
                                             @if ($work->genre)
-                                            <span class="inline-block px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-700">
+                                            <span class="mx-1 text-gray-300">／</span>
+                                            <span class="font-semibold text-gray-600">ジャンル：</span>
+                                            <span class="text-teal-600 hover:underline">
                                                 {{ $work->genre }}
                                             </span>
                                             @endif
-                                        </div>
+                                        </p>
                                     </div>
 
                                     <div class="text-sm text-gray-700 space-y-2">
