@@ -46,8 +46,8 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
+                        <x-dropdown-link :href="route('profile.edit.custom')">
+                            プロフィール編集
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -55,7 +55,7 @@
                             @csrf
 
                             <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
+                                onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
@@ -86,11 +86,11 @@
             <x-responsive-nav-link :href="route('works.index')" :active="request()->routeIs('works.*')">
                 作品一覧
             </x-responsive-nav-link>
-            
+
             <x-responsive-nav-link :href="route('timeline.index')" :active="request()->routeIs('timeline.*')">
                 タイムライン
             </x-responsive-nav-link>
-            
+
             <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
                 ユーザー検索
             </x-responsive-nav-link>
@@ -113,7 +113,7 @@
                     @csrf
 
                     <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
+                        onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>
