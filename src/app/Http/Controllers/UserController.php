@@ -15,10 +15,7 @@ class UserController extends Controller
         $users = User::query()
             ->where('id', '!=', Auth::id())
             ->when($keyword, function ($query, $keyword) {
-                return $query->where(function ($query) use ($keyword) {
-                    $query->where('name', 'like', '%' . $keyword . '%')
-                        ->orWhere('email', 'like', '%' . $keyword . '%');
-                });
+                return $query->where('name', 'like', '%' . $keyword . '%');
             })
             ->latest()
             ->get();

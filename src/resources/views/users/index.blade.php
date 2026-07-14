@@ -12,20 +12,20 @@
                 <div class="p-6">
 
                     <p class="text-gray-600 mb-6">
-                        名前またはメールアドレスで、他のユーザーを検索できます。
+                        ユーザー名で、他のユーザーを検索できます。
                     </p>
 
                     <form action="{{ route('users.index') }}" method="GET" class="mb-6">
                         <div class="flex items-center gap-3">
                             <input type="text"
-                                    name="keyword"
-                                    value="{{ $keyword ?? '' }}"
-                                    placeholder="ユーザー名またはメールアドレスで検索"
-                                    class="block w-full rounded-md border-gray-300 shadow-sm">
+                                name="keyword"
+                                value="{{ $keyword ?? '' }}"
+                                placeholder="ユーザー名で検索"
+                                class="block w-full rounded-md border-gray-300 shadow-sm">
 
                             <button type="submit"
-                                    class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
-                                    style="min-width: 80px; white-space: nowrap;">
+                                class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+                                style="min-width: 80px; white-space: nowrap;">
                                 検索
                             </button>
 
@@ -38,33 +38,44 @@
                     </form>
 
                     @if ($users->isEmpty())
-                        <p class="text-gray-500">
-                            ユーザーが見つかりませんでした。
-                        </p>
+                    <p class="text-gray-500">
+                        ユーザーが見つかりませんでした。
+                    </p>
                     @else
-                        <div class="space-y-4">
-                            @foreach ($users as $user)
-                                <div class="border rounded-xl p-5 bg-white shadow-sm">
-                                    <div class="flex items-center justify-between gap-4">
-                                        <div>
-                                            <h3 class="text-lg font-bold text-gray-900">
-                                                {{ $user->name }}
-                                            </h3>
+                    <div class="space-y-4">
+                        @foreach ($users as $user)
+                        <div class="border rounded-xl p-5 bg-white shadow-sm">
+                            <div class="flex items-center justify-between gap-4">
+                                <div class="flex items-center gap-4 min-w-0">
+                                    <div class="rounded-full bg-gray-200 flex items-center justify-center text-lg font-bold text-gray-500 flex-shrink-0"
+                                        style="width: 56px; height: 56px;">
+                                        {{ mb_substr($user->name, 0, 1) }}
+                                    </div>
 
-                                            <p class="text-sm text-gray-500 mt-1">
-                                                {{ $user->email }}
-                                            </p>
-                                        </div>
+                                    <div class="min-w-0">
+                                        <h3 class="text-lg font-bold text-gray-900 break-words">
+                                            {{ $user->name }}
+                                        </h3>
 
-                                        <a href="{{ route('users.show', $user) }}"
-                                            class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
-                                            style="white-space: nowrap;">
-                                            詳細
-                                        </a>
+                                        <p class="text-sm text-gray-500 mt-1">
+                                            エンタメログユーザー
+                                        </p>
+
+                                        <p class="text-sm text-gray-500 mt-1">
+                                            登録作品：{{ $user->works->count() }}件
+                                        </p>
                                     </div>
                                 </div>
-                            @endforeach
+
+                                <a href="{{ route('users.show', $user) }}"
+                                    class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+                                    style="white-space: nowrap;">
+                                    ユーザー詳細を見る
+                                </a>
+                            </div>
                         </div>
+                        @endforeach
+                    </div>
                     @endif
 
                 </div>
