@@ -51,12 +51,13 @@
 
                             <textarea id="bio"
                                 name="bio"
-                                rows="5"
+                                rows="4"
+                                maxlength="200"
                                 class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                                 placeholder="好きな作品や、よく見るジャンルなどを書いてみましょう。">{{ old('bio', $user->bio) }}</textarea>
 
                             <p class="mt-1 text-sm text-gray-500">
-                                1000文字以内で入力してください。
+                                200文字以内で入力してください。
                             </p>
                         </div>
 
@@ -65,15 +66,21 @@
                                 プロフィール画像
                             </label>
 
-                            <input type="file"
-                                id="profile_image"
-                                name="profile_image"
-                                accept="image/*"
-                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                            <div class="mt-2 p-4 bg-gray-50 border rounded-xl">
+                                <input type="file"
+                                    id="profile_image"
+                                    name="profile_image"
+                                    accept="image/*"
+                                    class="block w-full text-sm text-gray-700">
 
-                            <p class="mt-1 text-sm text-gray-500">
-                                JPG、PNGなどの画像ファイルを選択できます。最大2MBまでです。
-                            </p>
+                                <p class="mt-2 text-sm text-gray-500">
+                                    JPG、PNGなどの画像ファイルを選択できます。最大2MBまでです。
+                                </p>
+
+                                <p class="mt-1 text-xs text-gray-400">
+                                    新しい画像を選択して更新すると、現在のプロフィール画像が変更されます。
+                                </p>
+                            </div>
                         </div>
 
                         <div>
@@ -83,7 +90,7 @@
 
                             <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-xl border">
                                 <div class="rounded-full bg-gray-200 overflow-hidden flex items-center justify-center text-xl font-bold text-gray-500 flex-shrink-0"
-                                    style="width: 72px; height: 72px;">
+                                    style="width: 72px; height: 72px; min-width: 72px;">
                                     @if ($user->profile_image_url)
                                     <img src="{{ $user->profile_image_url }}"
                                         alt="{{ $user->name }}"
@@ -98,7 +105,7 @@
                                         {{ $user->name }}
                                     </p>
 
-                                    <p class="text-sm text-gray-500">
+                                    <p class="mt-1 text-sm text-gray-500 leading-relaxed break-words">
                                         {{ $user->bio ?: '自己紹介はまだありません。' }}
                                     </p>
                                 </div>

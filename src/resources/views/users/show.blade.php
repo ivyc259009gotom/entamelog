@@ -36,8 +36,7 @@
                                         {{ $user->name }}
                                     </h3>
 
-                                    <p class="mt-2 text-sm text-gray-500 leading-relaxed"
-                                        style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                                    <p class="mt-2 text-sm text-gray-500 leading-relaxed break-words">
                                         {{ $user->bio ?: 'エンタメログユーザー' }}
                                     </p>
                                 </div>

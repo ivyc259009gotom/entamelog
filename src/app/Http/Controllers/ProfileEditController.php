@@ -21,7 +21,7 @@ class ProfileEditController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'bio' => 'nullable|string|max:1000',
+            'bio' => 'nullable|string|max:200',
             'profile_image' => 'nullable|image|max:2048',
         ]);
 
