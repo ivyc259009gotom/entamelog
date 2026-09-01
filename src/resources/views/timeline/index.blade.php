@@ -120,7 +120,7 @@
                                             作品詳細を見る
                                         </a>
 
-                                        <a href="{{ route('users.show', $work->user) }}"
+                                        <a href="{{ route('users.show', $work->user->username) }}"
                                             class="inline-block px-4 py-2 bg-gray-100 text-gray-800 text-sm font-semibold rounded-md hover:bg-gray-200">
                                             {{ $work->user->name }} さんのページを見る
                                         </a>

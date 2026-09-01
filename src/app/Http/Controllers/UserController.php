@@ -29,8 +29,10 @@ class UserController extends Controller
         return view('users.index', compact('users', 'keyword', 'hasSearched'));
     }
 
-    public function show(User $user)
+    public function show(string $username)
     {
+        $user = User::where('username', $username)->firstOrFail();
+
         $works = $user->works()
             ->latest()
             ->get();

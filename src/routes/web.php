@@ -25,7 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/timeline', [TimelineController::class, 'index'])->name('timeline.index');
     
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
-    Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
+    Route::get('/users/{username}', [UserController::class, 'show'])->name('users.show');
 
     Route::post('/users/{user}/follow', [FollowController::class, 'store'])->name('follows.store');
     Route::delete('/users/{user}/follow', [FollowController::class, 'destroy'])->name('follows.destroy');
