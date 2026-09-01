@@ -21,11 +21,13 @@ class ProfileEditController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'username' => 'nullable|string|max:50|alpha_dash|unique:users,username,' . $user->id,
             'bio' => 'nullable|string|max:200',
             'profile_image' => 'nullable|image|max:2048',
         ]);
 
         $user->name = $validated['name'];
+        $user->username = $validated['username'] ?? null;
         $user->bio = $validated['bio'] ?? null;
 
         if ($request->hasFile('profile_image')) {

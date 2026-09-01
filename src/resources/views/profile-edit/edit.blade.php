@@ -45,6 +45,29 @@
                         </div>
 
                         <div>
+                            <label for="username" class="block font-medium text-gray-700">
+                                ユーザーID
+                            </label>
+
+                            <div class="mt-1 flex rounded-md shadow-sm">
+                                <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                                    @
+                                </span>
+
+                                <input type="text"
+                                    id="username"
+                                    name="username"
+                                    value="{{ old('username', $user->username) }}"
+                                    class="block w-full border-gray-300 rounded-r-md shadow-sm"
+                                    placeholder="例：miwako">
+                            </div>
+
+                            <p class="mt-1 text-sm text-gray-500">
+                                半角英数字・ハイフン・アンダーバーが使えます。50文字以内で入力してください。
+                            </p>
+                        </div>
+
+                        <div>
                             <label for="bio" class="block font-medium text-gray-700">
                                 自己紹介
                             </label>
@@ -104,6 +127,12 @@
                                     <p class="text-lg font-bold text-gray-900">
                                         {{ $user->name }}
                                     </p>
+
+                                    @if ($user->username)
+                                    <p class="text-sm text-gray-400">
+                                        {{ '@' . $user->username }}
+                                    </p>
+                                    @endif
 
                                     <p class="mt-1 text-sm text-gray-500 leading-relaxed break-words">
                                         {{ $user->bio ?: '自己紹介はまだありません。' }}

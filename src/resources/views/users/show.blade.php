@@ -36,6 +36,12 @@
                                         {{ $user->name }}
                                     </h3>
 
+                                    @if ($user->username)
+                                    <p class="mt-1 text-sm text-gray-400">
+                                        {{ '@' . $user->username }}
+                                    </p>
+                                    @endif
+
                                     <p class="mt-2 text-sm text-gray-500 leading-relaxed break-words">
                                         {{ $user->bio ?: 'エンタメログユーザー' }}
                                     </p>

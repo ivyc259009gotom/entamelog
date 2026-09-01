@@ -10,17 +10,23 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-        $keyword = $request->input('keyword');
+        $keyword = trim($request->input('keyword', ''));
+        $hasSearched = $keyword !== '';
 
-        $users = User::query()
-            ->where('id', '!=', Auth::id())
-            ->when($keyword, function ($query, $keyword) {
-                return $query->where('name', 'like', '%' . $keyword . '%');
-            })
-            ->latest()
-            ->get();
+        $users = collect();
 
-        return view('users.index', compact('users', 'keyword'));
+        if ($keyword) {
+            $users = User::query()
+                ->where('id', '!=', Auth::id())
+                ->where(function ($query) use ($keyword) {
+                    $query->where('name', 'like', '%' . $keyword . '%')
+                        ->orWhere('username', 'like', '%' . $keyword . '%');
+                })
+                ->latest()
+                ->get();
+        }
+
+        return view('users.index', compact('users', 'keyword', 'hasSearched'));
     }
 
     public function show(User $user)

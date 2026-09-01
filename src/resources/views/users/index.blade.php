@@ -12,7 +12,7 @@
                 <div class="p-6">
 
                     <p class="text-gray-600 mb-6">
-                        ユーザー名で、他のユーザーを検索できます。
+                        ユーザー名またはユーザーIDで、他のユーザーを検索できます。
                     </p>
 
                     <form action="{{ route('users.index') }}" method="GET" class="mb-6">
@@ -20,7 +20,7 @@
                             <input type="text"
                                 name="keyword"
                                 value="{{ $keyword ?? '' }}"
-                                placeholder="ユーザー名で検索"
+                                placeholder="ユーザー名またはユーザーIDで検索"
                                 class="block w-full rounded-md border-gray-300 shadow-sm">
 
                             <button type="submit"
@@ -37,7 +37,9 @@
                         </div>
                     </form>
 
-                    @if ($users->isEmpty())
+                    @if (! $hasSearched)
+                    {{-- 検索前は何も表示しない --}}
+                    @elseif ($users->isEmpty())
                     <p class="text-gray-500">
                         ユーザーが見つかりませんでした。
                     </p>
@@ -62,6 +64,12 @@
                                         <h3 class="text-lg font-bold text-gray-900 break-words">
                                             {{ $user->name }}
                                         </h3>
+
+                                        @if ($user->username)
+                                        <p class="text-sm text-gray-400 mt-1">
+                                            {{ '@' . $user->username }}
+                                        </p>
+                                        @endif
 
                                         <p class="text-sm text-gray-500 mt-1"
                                             style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;">
