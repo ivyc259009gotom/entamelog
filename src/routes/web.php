@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TmdbController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\ProfileEditController;
+use App\Models\Work;
+use Illuminate\Support\Facades\Auth;
 
 
 Route::get('/', function () {
@@ -16,7 +18,17 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $user = Auth::user();
+
+    $followingIds = $user->followings()->pluck('users.id');
+
+    $timelineWorks = Work::with('user')
+        ->whereIn('user_id', $followingIds)
+        ->latest()
+        ->take(10)
+        ->get();
+
+    return view('dashboard', compact('timelineWorks'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

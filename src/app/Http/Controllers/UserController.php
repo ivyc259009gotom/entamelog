@@ -31,7 +31,9 @@ class UserController extends Controller
 
     public function show(string $username)
     {
-        $user = User::where('username', $username)->firstOrFail();
+        $user = User::where('username', $username)
+            ->withCount(['followings', 'followers', 'works'])
+            ->firstOrFail();
 
         $works = $user->works()
             ->latest()

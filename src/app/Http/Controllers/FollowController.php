@@ -16,7 +16,7 @@ class FollowController extends Controller
         Auth::user()->followings()->syncWithoutDetaching([$user->id]);
 
         return redirect()
-            ->route('users.show', $user)
+            ->route('users.show', $user->username)
             ->with('success', 'フォローしました。');
     }
 
@@ -25,7 +25,7 @@ class FollowController extends Controller
         Auth::user()->followings()->detach($user->id);
 
         return redirect()
-            ->route('users.show', $user)
+            ->route('users.show', $user->username)
             ->with('success', 'フォローを解除しました。');
     }
 }

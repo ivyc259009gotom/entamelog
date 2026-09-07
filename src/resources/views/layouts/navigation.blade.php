@@ -5,8 +5,8 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                    <a href="{{ route('dashboard') }}" class="text-xl font-bold text-indigo-600">
+                        エンタメログ
                     </a>
                 </div>
 
@@ -16,16 +16,20 @@
                         ホーム
                     </x-nav-link>
 
-                    <x-nav-link :href="route('works.index')" :active="request()->routeIs('works.*')">
+                    <x-nav-link :href="route('works.index')" :active="request()->routeIs('works.index')">
                         作品一覧
                     </x-nav-link>
 
-                    <x-nav-link :href="route('timeline.index')" :active="request()->routeIs('timeline.*')">
-                        タイムライン
+                    <x-nav-link :href="route('works.create')" :active="request()->routeIs('works.create')">
+                        作品登録
                     </x-nav-link>
 
-                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
+                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
                         ユーザー検索
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('users.show', Auth::user()->username)" :active="request()->routeIs('users.show') && request()->route('username') === Auth::user()->username">
+                        プロフィール
                     </x-nav-link>
                 </div>
             </div>

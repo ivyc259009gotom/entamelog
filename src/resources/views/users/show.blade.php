@@ -1,7 +1,11 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            @if (Auth::id() === $user->id)
+            マイプロフィール
+            @else
             ユーザー詳細
+            @endif
         </h2>
     </x-slot>
 
@@ -18,10 +22,10 @@
                     @endif
 
                     <div class="mb-10 p-6 border rounded-xl bg-white">
-                        <div class="flex items-center justify-between gap-4">
+                        <div class="flex items-start justify-between gap-4">
                             <div class="flex items-start gap-10 min-w-0">
                                 <div class="rounded-full bg-gray-200 overflow-hidden flex items-center justify-center text-xl font-bold text-gray-500 flex-shrink-0"
-                                    style="width: 72px; height: 72px; min-width: 72px; margin-right: 24px;">
+                                    style="width: 88px; height: 88px; min-width: 88px; margin-right: 24px;">
                                     @if ($user->profile_image_url)
                                     <img src="{{ $user->profile_image_url }}"
                                         alt="{{ $user->name }}"
@@ -45,6 +49,35 @@
                                     <p class="mt-2 text-sm text-gray-500 leading-relaxed break-words">
                                         {{ $user->bio ?: 'エンタメログユーザー' }}
                                     </p>
+
+                                    <div class="mt-5 flex flex-wrap gap-3">
+                                        <div class="min-w-[120px] border rounded-xl px-4 py-3 bg-gray-50 text-center">
+                                            <p class="text-xs text-gray-500">
+                                                フォロー中
+                                            </p>
+                                            <p class="mt-1 text-lg font-bold text-gray-900">
+                                                {{ $user->followings_count }}
+                                            </p>
+                                        </div>
+
+                                        <div class="min-w-[120px] border rounded-xl px-4 py-3 bg-gray-50 text-center">
+                                            <p class="text-xs text-gray-500">
+                                                フォロワー
+                                            </p>
+                                            <p class="mt-1 text-lg font-bold text-gray-900">
+                                                {{ $user->followers_count }}
+                                            </p>
+                                        </div>
+
+                                        <div class="min-w-[120px] border rounded-xl px-4 py-3 bg-gray-50 text-center">
+                                            <p class="text-xs text-gray-500">
+                                                登録作品
+                                            </p>
+                                            <p class="mt-1 text-lg font-bold text-gray-900">
+                                                {{ $user->works_count }}
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
