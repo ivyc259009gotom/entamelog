@@ -1,16 +1,17 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            @if (Auth::id() === $user->id)
-            マイプロフィール
-            @else
-            ユーザー詳細
-            @endif
-        </h2>
-    </x-slot>
 
     <div class="py-12">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 space-y-6">
+
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">
+                    @if (Auth::id() === $user->id)
+                    マイプロフィール
+                    @else
+                    {{ $user->name }}さんのプロフィール
+                    @endif
+                </h2>
+            </div>
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
@@ -51,23 +52,25 @@
                                     </p>
 
                                     <div class="mt-5 flex flex-wrap gap-3">
-                                        <div class="min-w-[120px] border rounded-xl px-4 py-3 bg-gray-50 text-center">
+                                        <a href="{{ route('users.followings', $user->username) }}"
+                                            class="min-w-[120px] border rounded-xl px-4 py-3 bg-gray-50 text-center hover:bg-indigo-50 hover:border-indigo-200 transition">
                                             <p class="text-xs text-gray-500">
                                                 フォロー中
                                             </p>
                                             <p class="mt-1 text-lg font-bold text-gray-900">
                                                 {{ $user->followings_count }}
                                             </p>
-                                        </div>
+                                        </a>
 
-                                        <div class="min-w-[120px] border rounded-xl px-4 py-3 bg-gray-50 text-center">
+                                        <a href="{{ route('users.followers', $user->username) }}"
+                                            class="min-w-[120px] border rounded-xl px-4 py-3 bg-gray-50 text-center hover:bg-indigo-50 hover:border-indigo-200 transition">
                                             <p class="text-xs text-gray-500">
                                                 フォロワー
                                             </p>
                                             <p class="mt-1 text-lg font-bold text-gray-900">
                                                 {{ $user->followers_count }}
                                             </p>
-                                        </div>
+                                        </a>
 
                                         <div class="min-w-[120px] border rounded-xl px-4 py-3 bg-gray-50 text-center">
                                             <p class="text-xs text-gray-500">

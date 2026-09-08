@@ -41,4 +41,32 @@ class UserController extends Controller
 
         return view('users.show', compact('user', 'works'));
     }
+
+    public function followings(string $username)
+    {
+        $user = User::where('username', $username)
+            ->withCount(['followings', 'followers', 'works'])
+            ->firstOrFail();
+
+        $users = $user->followings()
+            ->withCount('works')
+            ->latest()
+            ->get();
+
+        return view('users.followings', compact('user', 'users'));
+    }
+
+    public function followers(string $username)
+    {
+        $user = User::where('username', $username)
+            ->withCount(['followings', 'followers', 'works'])
+            ->firstOrFail();
+
+        $users = $user->followers()
+            ->withCount('works')
+            ->latest()
+            ->get();
+
+        return view('users.followers', compact('user', 'users'));
+    }
 }

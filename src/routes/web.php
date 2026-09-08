@@ -14,7 +14,11 @@ use Illuminate\Support\Facades\Auth;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    if (Auth::check()) {
+        return redirect()->route('dashboard');
+    }
+
+    return redirect()->route('login');
 });
 
 Route::get('/dashboard', function () {
@@ -37,6 +41,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/timeline', [TimelineController::class, 'index'])->name('timeline.index');
     
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
+
+    Route::get('/users/{username}/followings', [UserController::class, 'followings'])
+        ->name('users.followings');
+
+    Route::get('/users/{username}/followers', [UserController::class, 'followers'])
+        ->name('users.followers');
+
     Route::get('/users/{username}', [UserController::class, 'show'])->name('users.show');
 
     Route::post('/users/{user}/follow', [FollowController::class, 'store'])->name('follows.store');

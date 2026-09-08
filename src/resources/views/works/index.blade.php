@@ -1,16 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                エンタメログ
-            </h2>
-
-            <a href="{{ route('works.create') }}"
-                class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
-                作品を登録
-            </a>
-        </div>
-    </x-slot>
 
     <div class="py-12">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">

@@ -1,9 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            作品編集
-        </h2>
-    </x-slot>
 
     <div class="py-12">
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
@@ -11,10 +6,10 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
                     <div class="mb-6">
-                        <h3 class="text-lg font-bold text-gray-900">
+                        <h2 class="text-2xl font-bold text-gray-900">
                             作品情報を編集する
-                        </h3>
-                        <p class="mt-1 text-sm text-gray-600">
+                        </h2>
+                        <p class="mt-2 text-sm text-gray-600">
                             視聴状況、評価、感想メモなどを更新できます。
                         </p>
                     </div>
