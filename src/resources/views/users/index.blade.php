@@ -1,5 +1,35 @@
 <x-app-layout>
-    
+
+    <style>
+        @media (max-width: 640px) {
+            .user-search-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .user-search-row input,
+            .user-search-row button,
+            .user-search-row a {
+                width: 100% !important;
+            }
+
+            .user-result-card {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .user-result-info {
+                align-items: flex-start;
+            }
+
+            .user-result-button {
+                width: 100% !important;
+                display: block;
+                text-align: center;
+            }
+        }
+    </style>
+
     <div class="py-12">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
@@ -11,7 +41,7 @@
                     </p>
 
                     <form action="{{ route('users.index') }}" method="GET" class="mb-6">
-                        <div class="flex items-center gap-3">
+                        <div class="user-search-row flex items-center gap-3">
                             <input type="text"
                                 name="keyword"
                                 value="{{ $keyword ?? '' }}"
@@ -42,8 +72,9 @@
                     <div class="space-y-4">
                         @foreach ($users as $user)
                         <div class="border rounded-xl p-5 bg-white shadow-sm">
-                            <div class="flex items-center justify-between gap-4">
-                                <div class="flex items-center gap-4 min-w-0">
+                            <div class="user-result-card flex items-center justify-between gap-5">
+
+                                <div class="user-result-info flex items-center gap-4 min-w-0">
                                     <div class="rounded-full bg-gray-200 overflow-hidden flex items-center justify-center text-lg font-bold text-gray-500 flex-shrink-0"
                                         style="width: 56px; height: 56px; min-width: 56px;">
                                         @if ($user->profile_image_url)
@@ -66,7 +97,7 @@
                                         </p>
                                         @endif
 
-                                        <p class="text-sm text-gray-500 mt-1"
+                                        <p class="text-sm text-gray-500 mt-1 break-words"
                                             style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;">
                                             {{ $user->bio ?: 'エンタメログユーザー' }}
                                         </p>
@@ -78,10 +109,11 @@
                                 </div>
 
                                 <a href="{{ route('users.show', $user->username) }}"
-                                    class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+                                    class="user-result-button px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
                                     style="white-space: nowrap;">
                                     ユーザー詳細を見る
                                 </a>
+
                             </div>
                         </div>
                         @endforeach

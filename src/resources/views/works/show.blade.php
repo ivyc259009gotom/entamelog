@@ -1,21 +1,50 @@
 <x-app-layout>
 
-    <div class="py-12">
-        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+    <style>
+        @media (max-width: 640px) {
+            .work-detail-header {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
 
-            <div class="mb-6 flex items-center justify-between">
+            .work-detail-body {
+                flex-direction: column;
+                gap: 1.5rem !important;
+            }
+
+            .work-detail-info {
+                width: 100%;
+            }
+
+            .work-detail-actions {
+                flex-direction: column;
+            }
+
+            .work-detail-actions a,
+            .work-detail-actions button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+
+    <div class="py-10 md:py-14">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="work-detail-header mb-8 flex items-center justify-between gap-4">
                 <h2 class="text-2xl font-bold text-gray-900">
                     作品詳細
                 </h2>
 
                 <a href="{{ route('works.index') }}"
-                    class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">
+                    class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300"
+                    style="white-space: nowrap;">
                     一覧へ戻る
                 </a>
             </div>
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 space-y-6">
+            <div class="bg-white overflow-hidden shadow-sm rounded-2xl">
+                <div class="p-6 md:p-8 space-y-6">
 
                     <div class="mb-4">
                         <h3 class="font-bold text-gray-900 break-words"
@@ -29,7 +58,7 @@
                     </div>
 
                     <div class="border-t pt-6">
-                        <div class="flex items-start" style="gap: 48px;">
+                        <div class="work-detail-body flex items-start" style="gap: 48px;">
 
                             <div class="bg-gray-100 rounded-lg overflow-hidden flex-shrink-0 border"
                                 style="width: 150px; height: 225px;">
@@ -44,7 +73,7 @@
                                 @endif
                             </div>
 
-                            <div class="flex-1 min-w-0 space-y-4 pt-2">
+                            <div class="work-detail-info flex-1 min-w-0 space-y-4 pt-2">
                                 <p>
                                     <span class="font-semibold text-gray-700">種別：</span>
                                     {{ $work->type }}
@@ -85,7 +114,7 @@
                                     <span class="font-semibold text-gray-700">評価：</span>
 
                                     @if ($work->rating)
-                                    <span class="text-yellow-500">
+                                    <span class="text-yellow-500 whitespace-nowrap">
                                         @for ($i = 1; $i <= 5; $i++)
                                             @if ($i <=$work->rating)
                                             ★
@@ -95,15 +124,16 @@
                                             @endfor
                                     </span>
                                     @else
-                                    未評価
+                                    <span class="text-gray-500">未評価</span>
                                     @endif
                                 </p>
 
                                 <div>
-                                    <p class="font-semibold text-gray-700">感想・メモ：</p>
+                                    <p class="font-semibold text-gray-700">
+                                        感想・メモ：
+                                    </p>
 
-                                    <div class="mt-2 p-4 bg-gray-50 rounded-md text-gray-800 text-left"
-                                        style="text-align: left; word-break: break-all;">
+                                    <div class="mt-2 p-4 bg-gray-50 rounded-md text-gray-800 leading-relaxed break-words">
                                         {{ $work->memo ?: 'メモはありません。' }}
                                     </div>
                                 </div>
@@ -113,7 +143,7 @@
                     </div>
 
                     @if ($work->user_id === Auth::id())
-                    <div class="flex justify-end gap-3 border-t pt-4">
+                    <div class="work-detail-actions flex justify-end gap-3 border-t pt-4">
                         <a href="{{ route('works.edit', $work) }}"
                             class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
                             style="white-space: nowrap;">
@@ -133,9 +163,11 @@
                         </form>
                     </div>
                     @endif
+
                 </div>
             </div>
 
         </div>
     </div>
+
 </x-app-layout>

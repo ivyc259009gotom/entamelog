@@ -1,10 +1,29 @@
 <x-app-layout>
-   
+
+    <style>
+        @media (max-width: 640px) {
+            .home-welcome-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .home-welcome-button-wrap {
+                width: 100%;
+            }
+
+            .home-welcome-button {
+                display: block;
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+
     <div class="py-12">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 space-y-10">
 
             <div class="bg-white border rounded-2xl px-10 py-9 shadow-sm">
-                <div class="flex items-center justify-between gap-10">
+                <div class="home-welcome-row flex items-center justify-between gap-10">
                     <div>
                         <h3 class="text-2xl font-bold text-gray-900">
                             エンタメログへようこそ
@@ -15,9 +34,9 @@
                         </p>
                     </div>
 
-                    <div class="flex-shrink-0">
+                    <div class="home-welcome-button-wrap flex-shrink-0">
                         <a href="{{ route('works.create') }}"
-                            class="inline-block px-5 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 shadow-sm">
+                            class="home-welcome-button inline-block px-5 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 shadow-sm">
                             作品を登録する
                         </a>
                     </div>
@@ -25,21 +44,14 @@
             </div>
 
             <div class="bg-white border rounded-2xl px-8 py-7 shadow-sm">
-                <div class="flex items-center justify-between mb-6">
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-900">
-                            新着タイムライン
-                        </h3>
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold text-gray-900">
+                        新着タイムライン
+                    </h3>
 
-                        <p class="mt-1 text-sm text-gray-500">
-                            フォロー中ユーザーが追加した作品を確認できます。
-                        </p>
-                    </div>
-
-                    <a href="{{ route('users.index') }}"
-                        class="text-sm text-indigo-600 hover:underline">
-                        ユーザーを探す →
-                    </a>
+                    <p class="mt-1 text-sm text-gray-500">
+                        フォロー中ユーザーが追加した作品を確認できます。
+                    </p>
                 </div>
 
                 @if ($timelineWorks->isEmpty())
@@ -171,4 +183,5 @@
 
         </div>
     </div>
+
 </x-app-layout>

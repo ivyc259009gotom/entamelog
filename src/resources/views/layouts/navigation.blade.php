@@ -91,12 +91,16 @@
                 作品一覧
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('timeline.index')" :active="request()->routeIs('timeline.*')">
-                タイムライン
+            <x-responsive-nav-link :href="route('works.create')" :active="request()->routeIs('works.create')">
+                作品登録
             </x-responsive-nav-link>
 
             <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
                 ユーザー検索
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('users.show', Auth::user()->username)" :active="request()->routeIs('users.show') && request()->route('username') === Auth::user()->username">
+                プロフィール
             </x-responsive-nav-link>
         </div>
 
@@ -108,8 +112,9 @@
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
+
+                <x-responsive-nav-link :href="route('profile.edit.custom')">
+                    プロフィール編集
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
@@ -118,8 +123,8 @@
 
                     <x-responsive-nav-link :href="route('logout')"
                         onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                            this.closest('form').submit();">
+                        ログアウト
                     </x-responsive-nav-link>
                 </form>
             </div>

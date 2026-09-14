@@ -12,29 +12,49 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
 
+                    <style>
+                        @media (max-width: 640px) {
+                            .work-search-row {
+                                flex-direction: column;
+                                align-items: stretch;
+                            }
+
+                            .work-search-row input,
+                            .work-search-row select,
+                            .work-search-row button,
+                            .work-search-row a {
+                                width: 100% !important;
+                            }
+                        }
+                    </style>
+
                     <form action="{{ route('works.index') }}" method="GET" class="mb-6">
-                        <div class="flex items-center gap-3">
+                        @if (!empty($genre))
+                        <input type="hidden" name="genre" value="{{ $genre }}">
+                        @endif
+
+                        <div class="work-search-row flex items-center gap-3">
                             <input type="text"
                                 name="keyword"
                                 value="{{ $keyword ?? '' }}"
                                 placeholder="作品タイトルで検索"
-                                class="block w-full rounded-md border-gray-300 shadow-sm">
+                                class="block flex-1 rounded-md border-gray-300 shadow-sm">
 
                             <select name="type"
-                                class="rounded-md border-gray-300 shadow-sm"
-                                style="min-width: 140px;">
+                                class="block rounded-md border-gray-300 shadow-sm"
+                                style="width: 160px;">
                                 <option value="">すべての種別</option>
                                 <option value="映画" @selected(($type ?? '' )==='映画' )>映画</option>
                                 <option value="ドラマ" @selected(($type ?? '' )==='ドラマ' )>ドラマ</option>
                                 <option value="アニメ" @selected(($type ?? '' )==='アニメ' )>アニメ</option>
                                 <option value="本" @selected(($type ?? '' )==='本' )>本</option>
+                                <option value="漫画" @selected(($type ?? '' )==='漫画' )>漫画</option>
                                 <option value="ゲーム" @selected(($type ?? '' )==='ゲーム' )>ゲーム</option>
-                                <option value="その他" @selected(($type ?? '' )==='その他' )>その他</option>
                             </select>
 
                             <select name="status"
-                                class="rounded-md border-gray-300 shadow-sm"
-                                style="min-width: 140px;">
+                                class="block rounded-md border-gray-300 shadow-sm"
+                                style="width: 160px;">
                                 <option value="">すべての状況</option>
                                 <option value="気になる" @selected(($status ?? '' )==='気になる' )>気になる</option>
                                 <option value="進行中" @selected(($status ?? '' )==='進行中' )>進行中</option>
@@ -43,14 +63,14 @@
                             </select>
 
                             <button type="submit"
-                                class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
-                                style="min-width: 80px; white-space: nowrap;">
+                                class="px-5 py-2 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700"
+                                style="min-width: 80px;">
                                 検索
                             </button>
 
                             <a href="{{ route('works.index') }}"
-                                class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 text-center"
-                                style="min-width: 80px; white-space: nowrap;">
+                                class="px-5 py-2 bg-gray-200 text-gray-800 font-semibold rounded-md hover:bg-gray-300 text-center"
+                                style="min-width: 80px;">
                                 クリア
                             </a>
                         </div>

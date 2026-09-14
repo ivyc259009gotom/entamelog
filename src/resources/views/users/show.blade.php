@@ -3,7 +3,7 @@
     <div class="py-12">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
-            <div class="mb-6">
+            <div class="mb-6 px-8 sm:px-0">
                 <h2 class="text-2xl font-bold text-gray-900">
                     @if (Auth::id() === $user->id)
                     マイプロフィール
@@ -23,8 +23,8 @@
                     @endif
 
                     <div class="mb-10 p-6 border rounded-xl bg-white">
-                        <div class="flex items-start justify-between gap-4">
-                            <div class="flex items-start gap-10 min-w-0">
+                        <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
+                            <div class="flex flex-col sm:flex-row sm:items-start gap-6 md:gap-10 min-w-0 flex-1">
                                 <div class="rounded-full bg-gray-200 overflow-hidden flex items-center justify-center text-xl font-bold text-gray-500 flex-shrink-0"
                                     style="width: 88px; height: 88px; min-width: 88px; margin-right: 24px;">
                                     @if ($user->profile_image_url)
@@ -86,11 +86,12 @@
 
                             <div class="flex-shrink-0">
                                 @if (Auth::id() === $user->id)
-                                <a href="{{ route('profile.edit.custom') }}"
-                                    class="inline-block px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
-                                    style="white-space: nowrap;">
-                                    プロフィール編集
-                                </a>
+                                <div class="w-full md:w-auto flex-shrink-0">
+                                    <a href="{{ route('profile.edit.custom') }}"
+                                        class="block md:inline-block w-full md:w-auto text-center px-5 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700">
+                                        プロフィール編集
+                                    </a>
+                                </div>
                                 @elseif (Auth::user()->isFollowing($user))
                                 <form action="{{ route('follows.destroy', $user) }}" method="POST">
                                     @csrf
