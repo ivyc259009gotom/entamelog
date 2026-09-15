@@ -36,9 +36,15 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
 
-                    <p class="text-gray-600 mb-6">
-                        ユーザー名またはユーザーIDで、他のユーザーを検索できます。
-                    </p>
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-900">
+                            ユーザー検索
+                        </h2>
+
+                        <p class="mt-2 text-gray-600">
+                            ユーザー名またはユーザーIDで、他のユーザーを検索できます。
+                        </p>
+                    </div>
 
                     <form action="{{ route('users.index') }}" method="GET" class="mb-6">
                         <div class="user-search-row flex items-center gap-3">

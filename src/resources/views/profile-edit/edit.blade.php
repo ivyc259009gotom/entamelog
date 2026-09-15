@@ -22,6 +22,16 @@
                     </div>
                     @endif
 
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-900">
+                            プロフィール編集
+                        </h2>
+
+                        <p class="mt-2 text-gray-600">
+                            ユーザー名、ユーザーID、自己紹介、プロフィール画像を変更できます。
+                        </p>
+                    </div>
+                    
                     <form action="{{ route('profile.update.custom') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                         @csrf
                         @method('PUT')

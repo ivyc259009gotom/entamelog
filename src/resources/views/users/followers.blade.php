@@ -1,9 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-2xl text-gray-900 leading-tight">
-            フォロワー一覧
-        </h2>
-    </x-slot>
 
     <div class="py-12">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 space-y-6">
@@ -20,10 +15,6 @@
                         </p>
                     </div>
 
-                    <a href="{{ route('users.show', $user->username) }}"
-                        class="text-sm text-indigo-600 hover:underline">
-                        プロフィールへ戻る →
-                    </a>
                 </div>
             </div>
 

@@ -1,20 +1,30 @@
 <x-app-layout>
 
+    <style>
+        @media (max-width: 640px) {
+            .profile-edit-button {
+                display: block;
+                width: 100%;
+            }
+        }
+    </style>
+
     <div class="py-12">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
-            <div class="mb-6 px-8 sm:px-0">
-                <h2 class="text-2xl font-bold text-gray-900">
-                    @if (Auth::id() === $user->id)
-                    マイプロフィール
-                    @else
-                    {{ $user->name }}さんのプロフィール
-                    @endif
-                </h2>
-            </div>
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
+
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-900">
+                            @if (Auth::id() === $user->id)
+                            マイプロフィール
+                            @else
+                            {{ $user->name }}さんのプロフィール
+                            @endif
+                        </h2>
+                    </div>
 
                     @if (session('success'))
                     <div class="mb-6 p-4 bg-green-100 text-green-800 rounded-md">
@@ -86,9 +96,9 @@
 
                             <div class="flex-shrink-0">
                                 @if (Auth::id() === $user->id)
-                                <div class="w-full md:w-auto flex-shrink-0">
+                                <div class="mt-5">
                                     <a href="{{ route('profile.edit.custom') }}"
-                                        class="block md:inline-block w-full md:w-auto text-center px-5 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700">
+                                        class="profile-edit-button inline-block text-center px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
                                         プロフィール編集
                                     </a>
                                 </div>
