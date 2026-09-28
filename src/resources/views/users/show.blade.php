@@ -1,10 +1,110 @@
 <x-app-layout>
 
     <style>
+        .profile-card-layout {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 32px;
+        }
+
+        .profile-main {
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .profile-avatar {
+            width: 112px;
+            height: 112px;
+            min-width: 112px;
+            border-radius: 9999px;
+            object-fit: cover;
+            border: 1px solid #e5e7eb;
+        }
+
+        .profile-avatar-placeholder {
+            width: 112px;
+            height: 112px;
+            min-width: 112px;
+            border-radius: 9999px;
+            background: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 700;
+            color: #6b7280;
+            border: 1px solid #e5e7eb;
+        }
+
+        .profile-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .profile-action {
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+
+        .profile-edit-button {
+            display: inline-block;
+            text-align: center;
+            padding: 10px 24px;
+            background: #4f46e5;
+            color: #ffffff;
+            font-weight: 600;
+            border-radius: 8px;
+            white-space: nowrap;
+        }
+
+        .profile-edit-button:hover {
+            background: #4338ca;
+        }
+
+        .profile-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .profile-stat-box {
+            width: 120px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            background: #f9fafb;
+            padding: 12px 16px;
+            text-align: center;
+        }
+
         @media (max-width: 640px) {
+            .profile-card-layout {
+                display: block;
+            }
+
+            .profile-main {
+                display: block;
+            }
+
+            .profile-info {
+                margin-top: 20px;
+            }
+
+            .profile-action {
+                margin-top: 24px;
+            }
+
             .profile-edit-button {
                 display: block;
                 width: 100%;
+            }
+
+            .profile-stats {
+                margin-top: 20px;
             }
         }
     </style>
@@ -16,118 +116,113 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
 
-                    <div class="mb-6">
-                        <h2 class="text-2xl font-bold text-gray-900">
+                    <div class="mb-10">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-6">
                             @if (Auth::id() === $user->id)
                             マイプロフィール
                             @else
                             {{ $user->name }}さんのプロフィール
                             @endif
                         </h2>
-                    </div>
 
-                    @if (session('success'))
-                    <div class="mb-6 p-4 bg-green-100 text-green-800 rounded-md">
-                        {{ session('success') }}
-                    </div>
-                    @endif
+                        <div class="bg-white border border-gray-200 rounded-2xl p-6 md:p-8">
+                            <div class="profile-card-layout">
 
-                    <div class="mb-10 p-6 border rounded-xl bg-white">
-                        <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
-                            <div class="flex flex-col sm:flex-row sm:items-start gap-6 md:gap-10 min-w-0 flex-1">
-                                <div class="rounded-full bg-gray-200 overflow-hidden flex items-center justify-center text-xl font-bold text-gray-500 flex-shrink-0"
-                                    style="width: 88px; height: 88px; min-width: 88px; margin-right: 24px;">
-                                    @if ($user->profile_image_url)
-                                    <img src="{{ $user->profile_image_url }}"
-                                        alt="{{ $user->name }}"
-                                        class="w-full h-full object-cover">
-                                    @else
-                                    {{ mb_substr($user->name, 0, 1) }}
-                                    @endif
-                                </div>
+                                <div class="profile-main">
+                                    <div>
+                                        @if ($user->profile_image_url)
+                                        <img src="{{ $user->profile_image_url }}"
+                                            alt="{{ $user->name }}"
+                                            class="profile-avatar">
+                                        @else
+                                        <div class="profile-avatar-placeholder">
+                                            {{ mb_substr($user->name, 0, 1) }}
+                                        </div>
+                                        @endif
+                                    </div>
 
-                                <div class="min-w-0">
-                                    <h3 class="text-2xl font-bold text-gray-900 break-words">
-                                        {{ $user->name }}
-                                    </h3>
+                                    <div class="profile-info">
+                                        <h3 class="text-2xl font-bold text-gray-900 break-words">
+                                            {{ $user->name }}
+                                        </h3>
 
-                                    @if ($user->username)
-                                    <p class="mt-1 text-sm text-gray-400">
-                                        {{ '@' . $user->username }}
-                                    </p>
-                                    @endif
+                                        @if ($user->username)
+                                        <p class="mt-1 text-sm text-gray-400">
+                                            {{ '@' . $user->username }}
+                                        </p>
+                                        @endif
 
-                                    <p class="mt-2 text-sm text-gray-500 leading-relaxed break-words">
-                                        {{ $user->bio ?: 'エンタメログユーザー' }}
-                                    </p>
+                                        <p class="mt-3 text-sm text-gray-600 leading-relaxed break-words">
+                                            {{ $user->bio ?: 'エンタメログユーザー' }}
+                                        </p>
 
-                                    <div class="mt-5 flex flex-wrap gap-3">
-                                        <a href="{{ route('users.followings', $user->username) }}"
-                                            class="min-w-[120px] border rounded-xl px-4 py-3 bg-gray-50 text-center hover:bg-indigo-50 hover:border-indigo-200 transition">
-                                            <p class="text-xs text-gray-500">
-                                                フォロー中
-                                            </p>
-                                            <p class="mt-1 text-lg font-bold text-gray-900">
-                                                {{ $user->followings_count }}
-                                            </p>
-                                        </a>
+                                        <div class="profile-stats">
+                                            <a href="{{ route('users.followings', $user->username) }}"
+                                                class="profile-stat-box hover:bg-indigo-50 hover:border-indigo-200 transition">
+                                                <p class="text-xs text-gray-500">
+                                                    フォロー中
+                                                </p>
+                                                <p class="mt-1 text-lg font-bold text-gray-900">
+                                                    {{ $user->followings_count }}
+                                                </p>
+                                            </a>
 
-                                        <a href="{{ route('users.followers', $user->username) }}"
-                                            class="min-w-[120px] border rounded-xl px-4 py-3 bg-gray-50 text-center hover:bg-indigo-50 hover:border-indigo-200 transition">
-                                            <p class="text-xs text-gray-500">
-                                                フォロワー
-                                            </p>
-                                            <p class="mt-1 text-lg font-bold text-gray-900">
-                                                {{ $user->followers_count }}
-                                            </p>
-                                        </a>
+                                            <a href="{{ route('users.followers', $user->username) }}"
+                                                class="profile-stat-box hover:bg-indigo-50 hover:border-indigo-200 transition">
+                                                <p class="text-xs text-gray-500">
+                                                    フォロワー
+                                                </p>
+                                                <p class="mt-1 text-lg font-bold text-gray-900">
+                                                    {{ $user->followers_count }}
+                                                </p>
+                                            </a>
 
-                                        <div class="min-w-[120px] border rounded-xl px-4 py-3 bg-gray-50 text-center">
-                                            <p class="text-xs text-gray-500">
-                                                登録作品
-                                            </p>
-                                            <p class="mt-1 text-lg font-bold text-gray-900">
-                                                {{ $user->works_count }}
-                                            </p>
+                                            <div class="profile-stat-box">
+                                                <p class="text-xs text-gray-500">
+                                                    登録作品
+                                                </p>
+                                                <p class="mt-1 text-lg font-bold text-gray-900">
+                                                    {{ $user->works_count }}
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="flex-shrink-0">
-                                @if (Auth::id() === $user->id)
-                                <div class="mt-5">
+                                <div class="profile-action">
+                                    @if (Auth::id() === $user->id)
                                     <a href="{{ route('profile.edit.custom') }}"
-                                        class="profile-edit-button inline-block text-center px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+                                        class="profile-edit-button">
                                         プロフィール編集
                                     </a>
+                                    @elseif (Auth::user()->isFollowing($user))
+                                    <form action="{{ route('follows.destroy', $user) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button type="submit"
+                                            class="px-6 py-2 border border-red-300 bg-white text-red-600 font-semibold rounded-md hover:bg-red-50"
+                                            style="white-space: nowrap;">
+                                            フォロー解除
+                                        </button>
+                                    </form>
+                                    @else
+                                    <form action="{{ route('follows.store', $user) }}" method="POST">
+                                        @csrf
+
+                                        <button type="submit"
+                                            class="px-6 py-2 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700"
+                                            style="white-space: nowrap;">
+                                            フォロー
+                                        </button>
+                                    </form>
+                                    @endif
                                 </div>
-                                @elseif (Auth::user()->isFollowing($user))
-                                <form action="{{ route('follows.destroy', $user) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
 
-                                    <button type="submit"
-                                        class="px-4 py-2 border border-red-300 bg-white text-red-600 rounded-md hover:bg-red-50"
-                                        style="white-space: nowrap;">
-                                        フォロー解除
-                                    </button>
-                                </form>
-                                @else
-                                <form action="{{ route('follows.store', $user) }}" method="POST">
-                                    @csrf
-
-                                    <button type="submit"
-                                        class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
-                                        style="white-space: nowrap;">
-                                        フォロー
-                                    </button>
-                                </form>
-                                @endif
                             </div>
                         </div>
                     </div>
-
+                    
                     <div class="mb-5 flex items-center gap-2">
                         <h4 class="text-xl font-bold text-gray-900">
                             登録作品
